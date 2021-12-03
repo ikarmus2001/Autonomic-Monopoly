@@ -28,7 +28,7 @@ int player_count()
 int dice_roll()
 {
     int dice_result = 0;
-        // odczytanie wyniku z klawiaturki <somehow>
+    // odczytanie wyniku z klawiaturki <somehow>
     return dice_result;
 }
 
@@ -45,17 +45,17 @@ void setup()
     //  
 }
 
-void loop(player_list)
+void loop()//player_list)
 {
 
     bool end_condition = false;
     while (end_condition == false)  // tury lec¹ dopóki nie ma koñca gry
     {
 
-        for (int x = 0; x < player_count; x++)
-        {
-            Player.turn()
-        }
+        //for (int x = 0; x < player_count; x++)
+        //{
+            // Player.turn()
+        //}
 
     }
     // put your main code here, to run repeatedly:
