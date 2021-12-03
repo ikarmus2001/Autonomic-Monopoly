@@ -1,9 +1,8 @@
-// 
-// 
-// 
 #include "board.h"
 #include <Player.cpp>
-#include <ArduinoMonopoly.ino>
+
+
+
 
 class Field
 {
@@ -18,8 +17,9 @@ class Field
 		{
 			if (this->owner == 0)
 			{
-				ArduinoMonopoly.lcd.print("Kupujesz za %s?", this->value);
-				// TODO ^this
+				lcd.print("Kupujesz za %s?", this->value);
+				// TODO ^this w jakiœ sposób trzeba te importy ogarn¹æ
+
 
 			}
 		}
