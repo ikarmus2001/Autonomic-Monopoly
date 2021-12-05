@@ -1,24 +1,24 @@
 #include "Player.h"
+#include <board.h>
 // #include 
 
-class Player
+
+
+void Player::turn(char roll)
 {
-    char player_id;
-    char player_position;
+    this->player_position += roll;
+    this->check_position();
+    this->further_operations();
+}
 
-public:
-    Player(char id, char pos = 0)
-    {
-        this->player_id = id;
-        this->player_position = pos;
-    }
+void Player::check_position()
+{
 
-    void turn(char roll, )
-    {
-        this -> player_position += roll;
-        check_position();
-    }
+    // for(int i = 0; i < )
+    //this->player_position
+}
 
+void Player::further_operations()
+{
 
-
-};
+}
