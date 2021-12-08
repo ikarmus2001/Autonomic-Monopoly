@@ -32,10 +32,10 @@
 > opis projektu
 
 ### Wykorzystane technologie
-
+> jakie biblioteki wykorzystaliśmy, płytki, itd
 
 ## Opis działania
-
+> dokładny opis działania
 
 ## Instalacja
 > jak zainstalować, co potrzebne, prerequities itd
