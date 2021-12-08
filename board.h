@@ -1,4 +1,4 @@
-// board.h
+// Board.h
 
 #ifndef _BOARD_h
 #define _BOARD_h
