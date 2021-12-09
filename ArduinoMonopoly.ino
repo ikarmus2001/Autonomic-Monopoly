@@ -1,3 +1,4 @@
+#include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include <Player.h>
 #include <board.h>

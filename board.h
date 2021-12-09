@@ -3,6 +3,8 @@
 #ifndef _BOARD_h
 #define _BOARD_h
 
+#include <LiquidCrystal_I2C.h>
+
 class Tile
 {
 public:
@@ -11,8 +13,8 @@ public:
 	char value;  // buy price/penalty
 	char owner;  // 0 - bank, <player id> - player
 
-	void buy_field(Player player);
-	void pay_penalty(Player player);
+	void buy_property(Player player, Board board);
+	void pay_penalty(Player player, Board board);
 };
 
 class Board

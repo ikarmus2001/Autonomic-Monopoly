@@ -116,8 +116,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AVR_atmega32u4__;__AVR_ATmega32U4__;__AVR_ATmega32u4__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=108016;ARDUINO_AVR_YUN;ARDUINO_ARCH_AVR;USB_VID=0x2341;USB_PID=0x8041;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\expert-octo-potato;$(ProjectDir)..\..\..\..\Documents\Arduino\libraries\LiquidCrystal_I2C-1.1.2;D:\ArduinoIDE\Arduino\hardware\arduino\avr\libraries\Wire\src;D:\ArduinoIDE\Arduino\hardware\arduino\avr\libraries\Wire\src\utility;D:\ArduinoIDE\Arduino\hardware\arduino\avr\cores\arduino;D:\ArduinoIDE\Arduino\hardware\arduino\avr\variants\yun;D:\ArduinoIDE\Arduino\hardware\tools\avr\\lib\gcc\avr\7.3.0\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\avr\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\\lib\gcc\avr\7.3.0\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\avr\include-fixed;D:\ArduinoIDE\Arduino\hardware\tools\avr\avr\include\avr;D:\ArduinoIDE\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)__vm\.expert-octo-potato.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,13 +151,14 @@
     <ClInclude Include="board.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="__vm\.ArduinoMonopoly.vsarduino.h" />
+    <ClInclude Include="__vm\.expert-octo-potato.vsarduino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties config.Debug.customdebug_uno_debugger_type="universal" />
+      <UserProperties config.Debug.customdebug_uno_debugger_type="universal" config.Debug.customdebug_yun_debugger_type="universal" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
