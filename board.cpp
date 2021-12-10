@@ -1,6 +1,7 @@
 #include "board.h"
 #include <Player.h>
 #include <LiquidCrystal_I2C.h>
+#include <array>
 
 
 LiquidCrystal_I2C Board::lcd_initializing()
@@ -15,51 +16,59 @@ LiquidCrystal_I2C Board::lcd_initializing()
 	return lcd_tmp;
 }
 
-int Board::players_initializing()
+std::array<Player, 4> Board::players_initializing()
 {
+	// to trzeba jakoœ super rozkminic - zwracamy array czy 
+	// ilosc graczy, a wypelniamy array gdzies indziej?
+
 	this->lcd.print("Dobra, to w ilu gramy?");
-	int odp = 4; // pobraæ z klawiaturki wartoœæ
-	return odp;
+	int odp = 4; // pobraæ z klawiaturki wartoœæ, ifcheck na wartosci
+	// Player p1 = Player(0);
+	std::array<Player, 4> tmp_nazwa = {  };
+	//Player tmp_nazwa[4];
+	for (int x = 1; x < odp; x++)
+	{
+		tmp_nazwa[x] = Player(x);
+	}
+	return tmp_nazwa;
+	
 }
 
-void Tile::buy_property(Player player, Board board)
+std::array<Tile, 36> Board::initialize_tiles()
 {
-	// chyba nie powinniœmy sprawdzaæ czy pole jest buyable, o tym powinna zadecydowaæ wywo³uj¹ca funkcja
-	if (this->type == 1 || this->type == 2)  // is buyable
-	{
-		if (this->owner == 0)
-		{
-			
-			if (player.balance >= this->value)
-			{
-				board.lcd.print("Kupujesz za " + this->value);
-				bool info_zwrotne = true;  // info zwrotne via klawiaturka, póki co hardcode true
-				if (info_zwrotne == true)
-				{
-					this->owner = player.player_id;
-					player.balance -= this->value;
-				}
-			}
+	return std::array<Tile, 36> = {
+	Tile start(0, 0, 100, 0),
+	Tile brown_dom_wedlikowskich(1, 1, 60, 1),
+	Tile kasa_spoleczna_1(2, 4, 0, 0);
+	Tile brown_drapacz_chmur(3, 1, 60, 1);
+	Tile radio_eska(4, 3, 200, 0);
+	Tile park_kosciuszki(5, 2, 200, 10);
+	Tile turquoise_osiedle_tysiaclecia(6, 1, 100, 2);
+	Tile szansa_1(7, 4, 0, 0);
+	Tile turquoise_osiedle_gwiazdy(8, 1, 100, 2);
 
+	Tile turquoise_(9, 1, 120, 2);
+	//Tile prison();
+	//Tile pink_();
+	//
+	//Tile green_dworcowa()
+	//mo¿e ktoœ ma lepszy pomys³ albo przynajmniej lepsze zdjêcia planszy do monopoly
+	// zwykle: https://ocdn.eu/images/pulscms/YmE7MDA_/ae26bab2aa7b6620d816db7a126f1a20.jpg
+	// kato https://ecsmedia.pl/c/16346400915680805-jpg-gallery.big-iext97058458.jpg
 
-		}
 	}
 }
 
-
-
-void Tile::pay_penalty(Player player, Board board)
+Tile Board::tile_from_id(char searched_id)
 {
-	if (player.balance >= this->value)
+	if (searched_id >= 0 && searched_id <= 36)
 	{
-		board.lcd.print("musisz zap³aciæ karê, blablabla");
-		// przy³o¿enie karty, zabranie kaski z konta
-		player.balance -= this->value;
+		return this->tiles_list[searched_id];
 	}
 	else
 	{
-		// policzyæ ewentualn¹ wartoœæ posiad³oœci po sprzedaniu (cena_pocz¹tkowa * 0.8?)
-		board.lcd.print("Ale siê ch³opie sp³uka³eœ, musisz coœ sprzedaæ");
+		// if (searched_id != ) anuluj operacje?
+		//pobierz now¹ wartoœæ z klawiaturki
 	}
 }
 
