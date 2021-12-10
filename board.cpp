@@ -2,16 +2,10 @@
 #include <Player.h>
 #include <LiquidCrystal_I2C.h>
 
-using namespace std;
-
-//using namespace LiquidCrystal_I2C;  // ????
-
-//LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2);
 
 LiquidCrystal_I2C Board::lcd_initializing()
 {
-	LiquidCrystal_I2C lcd_tmp = LiquidCrystal_I2C(0x27, 16, 2); // init lcd eee to trzeba naprawiæ
-	lcd_tmp.init();
+	LiquidCrystal_I2C lcd_tmp = LiquidCrystal_I2C(0x27, 16, 2);
 	lcd_tmp.begin(16, 2);
 	lcd_tmp.backlight();
 	lcd_tmp.setCursor(0, 0);
@@ -28,9 +22,10 @@ int Board::players_initializing()
 	return odp;
 }
 
-void Tile::buy_field(Player player, Board board)
+void Tile::buy_property(Player player, Board board)
 {
-	if (this->type == 1)  // is buyable
+	// chyba nie powinniœmy sprawdzaæ czy pole jest buyable, o tym powinna zadecydowaæ wywo³uj¹ca funkcja
+	if (this->type == 1 || this->type == 2)  // is buyable
 	{
 		if (this->owner == 0)
 		{
@@ -42,10 +37,11 @@ void Tile::buy_field(Player player, Board board)
 				if (info_zwrotne == true)
 				{
 					this->owner = player.player_id;
-					
-
+					player.balance -= this->value;
 				}
 			}
+
+
 		}
 	}
 }

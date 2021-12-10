@@ -35,5 +35,8 @@
     <ClInclude Include="board.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="__vm\.expert-octo-potato.vsarduino.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
