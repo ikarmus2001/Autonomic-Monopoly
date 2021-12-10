@@ -1,4 +1,6 @@
 // board.h
+#include <LiquidCrystal_I2C.h>
+#include <Player.h>
 
 #ifndef _BOARD_h
 #define _BOARD_h
@@ -11,22 +13,37 @@ public:
 	char value;  // buy price/penalty
 	char owner;  // 0 - bank, <player id> - player
 
-	void buy_field(Player player);
-	void pay_penalty(Player player);
+	void buy_field(Player player, Board board);
+	void pay_penalty(Player player, Board board);
+
+	Tile(char tile_id, char tile_type, char tile_value, char tile_owner=0)
+	{
+		this->id = tile_id;
+		this->type = tile_type;
+		this->value = tile_value;
+		this->owner = tile_owner;
+	}
 };
 
 class Board
 {
 public:
 
-	Tile tab[36]; // zainicjowaæ tablicê ze wszystkimi polami
-
 	LiquidCrystal_I2C lcd_initializing();
+
+	Tile tab[36]; // zainicjowaæ tablicê ze wszystkimi polami
 	LiquidCrystal_I2C lcd = lcd_initializing();
 	
 	int players_initializing();
-	int players_count = players_initializing();
-	Player players[4];  // eee idk dlaczego tmp ma tu problem
+	
+	Board()
+	{
+		
+		int players_count = players_initializing();
+		//Player players[4];
+	}
+	
+	  // eee idk dlaczego tmp ma tu problem
 
 
 };
