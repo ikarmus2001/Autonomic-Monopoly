@@ -25,19 +25,19 @@
 #define ir100		0xE619FF00
 #define ir200		0xF20DFF00
 
-class Signal {
+class InfraRed
+{
+private:
+	int IR_RECEIVE_PIN = 2;
 public:
-	int IR_RECEIVE_PIN = 2;		// Signal pin, 2 is the default one
-	
-	void begin();				// Uruchamia IrReceiver
-	uint32_t get();				// Pobiera sygna³ z pilota
+
+	InfraRed(int IR_RECEIVE_PIN);
+	void begin();				// Rozpoczyna prace z czujnikiem
+	void resume();				// Wznawia prace czujnika
+	bool available();			// Sprawdza, czy pojawil sie jakis sygnal
+	char decode();				// Dekoduje pobrany sygnal na akcje
 };
 
-class InfraRed : public Signal
-{
-public:
-	char decode();				// Dekoduje pobrany sygna³ na akcje
-};
 
 
 #endif
