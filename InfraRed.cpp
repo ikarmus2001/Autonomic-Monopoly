@@ -15,6 +15,7 @@ uint32_t Signal::get() {
 
 // Dekoduje sygna³ i zwraca go w postaci chara
 char InfraRed::decode() {
+    // Pobiera HEX i dekoduje go na jego odpowiednik w charze
 	switch (this->get()) {
         case ir0:
             //Serial.println("0");
@@ -56,7 +57,33 @@ char InfraRed::decode() {
             //Serial.println("9");
             return '9';
             break;
-        // TODO: dodaæ pozosta³e przyciski
+        case irMinus:
+            // Obs³uga przycisku - na pilocie, planowo ma sluzyc jako wymazywanie wartosci
+            return '-';
+            break;
+        case irPlus:
+            // Obs³uga przycisku + na pilocie
+            return '+';
+            break;
+        case irPrev:
+            // Obs³uga przycisku "previous" na pilocie
+            return '<';
+            break;
+        case irNext:
+            // Obs³uga przycisku "next" na pilocie
+            return '>';
+            break;
+        case irPlay:
+            // Obs³uga przycisku "play/pause" na pilocie
+            // tymczasowo jako 'p', bo funkcja zwraca char, mo¿na zmieniæ funkcje na stringa dla wiêkszej czytelnoœci
+            return 'p';
+            break;
+        case irEQ:
+            // Obs³uga przycisku EQ na pilocie
+            // tymczasowo jako 'e'
+            return 'e';
+            break;
+        // Opcjonalnie: dodaæ obs³uge pozosta³ych przycisków jeœli zajdzie taka potrzeba
 	}
 }
 
