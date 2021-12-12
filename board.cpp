@@ -35,7 +35,7 @@ void Tile::buy_field(Player player)
 			
 			if (player.balance >= this->value)
 			{
-				lcd.print("Kupujesz za %s?", this->value);
+				lcd.print("Kupujesz za ?" + this->value);
 				// TODO ^this w jakiœ sposób trzeba te importy ogarn¹æ
 				bool info_zwrotne = true;  // info zwrotne via klawiaturka, póki co hardcode true
 				if (info_zwrotne == true)
