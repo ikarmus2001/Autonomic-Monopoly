@@ -11,12 +11,12 @@ class Tile
 {
 public:
 	char id;
-	char type;  
+	char type;
 	// 0 - start, 1 - usual property, 2 - airport, 3 - penalty, 4 - chance/social credit
 	int value;  // buy price/penalty
 	char owner;  // 0 - bank, <player id> - player
 	bool pledge;  // czy posiadlosc zastawiona
-	char color;  
+	char color;
 	// 0 - no_color, 1 - brown, 2 - turquoise/light blue, 3 - pink, 4 - orange, 5 - red, 
 	// 6 - yellow, 7 - green, 8 - dark blue, 9 - newspaper(id12) and waterworks(id28),
 	// 10 - airports

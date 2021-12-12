@@ -50,12 +50,12 @@ void Player::buy_property(Tile tile, Board board)
 
 			if (this->balance >= tile.value)
 			{
-				board.lcd.print("Kupujesz za " + this->value);
+				board.lcd.print("Kupujesz za " + tile.value.to_string());
 				bool info_zwrotne = true;  // info zwrotne via klawiaturka, póki co hardcode true
 				if (info_zwrotne == true)
 				{
-					this->owner = player.player_id;
-					player.balance -= this->value;
+					tile.owner = this->player_id;
+					this->balance -= tile.value;
 				}
 			}
 
