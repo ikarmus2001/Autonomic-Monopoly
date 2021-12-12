@@ -17,7 +17,7 @@ public:
 	int IR_RECEIVE_PIN = 2; // Signal pin, default is 2
 	
 	void begin();	// Uruchamia IrReceiver
-	auto get();		// Pobiera sygna³ z pilota
+	uint32_t get();		// Pobiera sygna³ z pilota
 };
 
 class InfraRed : public Signal

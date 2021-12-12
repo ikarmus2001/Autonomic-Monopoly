@@ -6,10 +6,11 @@ void Signal::begin() {
 }
 
 // Zczytuje sygna³ z pilota i zwraca go w postaci HEXa
-auto Signal::get() {
+uint32_t Signal::get() {
 	if (IrReceiver.decode()) {
 		return IrReceiver.decodedIRData.decodedRawData;
 	}
+    return 0;
 }
 
 // Dekoduje sygna³ i zwraca go w postaci chara

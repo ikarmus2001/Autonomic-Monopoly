@@ -1,9 +1,9 @@
 #include <LiquidCrystal_I2C.h>
 #include <IRremote.hpp>
 #include <Wire.h>
-#include <Player.h>
-#include <board.h>
-#include <InfraRed.h>
+#include "Player.h"
+#include "board.h"
+#include "InfraRed.h"
 
 int player_count()
 {
@@ -49,13 +49,13 @@ void loop()//player_list)
 
 }
 
-int main()
-{
-    int players = player_count();
-    setup();
-    while (true)
-    {
-        loop();
-    }
-    return 0;
-}
+//int main()
+//{
+//    int players = player_count();
+//    setup();
+//    while (true)
+//    {
+//        loop();
+//    }
+//    return 0;
+//}
