@@ -1,7 +1,9 @@
+#include <LiquidCrystal_I2C.h>
+#include <IRremote.hpp>
 #include <Wire.h>
 #include <Player.h>
 #include <board.h>
-
+#include <InfraRed.h>
 
 int player_count()
 {
@@ -22,7 +24,12 @@ int dice_roll()
 
 void setup()
 {
-    Board board;
+    //Board board;
+
+    InfraRed IR;
+    // IR.IR_RECEIVE_PIN = 2;  // S³u¿y do ustawiania pinu od czujnika IR
+    IR.begin();
+
 }
 
 void loop()//player_list)
