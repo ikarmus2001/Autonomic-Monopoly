@@ -1,5 +1,5 @@
-#include <Player.h>
-
+#include "Player.h"
+#include "board.h"
 
 void Player::turn(char roll, Board board)
 {
@@ -42,7 +42,7 @@ void Player::retake_property(char property_id)
 // TODO
 void Player::buy_property(Tile tile, Board board)
 {
-	// chyba nie powinniœmy sprawdzaæ czy pole jest buyable, o tym powinna zadecydowaæ wywo³uj¹ca funkcja
+	// chyba nie powinniï¿½my sprawdzaï¿½ czy pole jest buyable, o tym powinna zadecydowaï¿½ wywoï¿½ujï¿½ca funkcja
 	if (tile.type == 1 || tile.type == 2)  // is buyable
 	{
 		if (tile.owner == 0)
@@ -51,7 +51,7 @@ void Player::buy_property(Tile tile, Board board)
 			if (this->balance >= tile.value)
 			{
 				board.lcd.print("Kupujesz za " + tile.value.to_string());
-				bool info_zwrotne = true;  // info zwrotne via klawiaturka, póki co hardcode true
+				bool info_zwrotne = true;  // info zwrotne via klawiaturka, pï¿½ki co hardcode true
 				if (info_zwrotne == true)
 				{
 					tile.owner = this->player_id;
@@ -68,14 +68,14 @@ void Player::pay_penalty(Tile tile, Board board)
 {
 	if (this->balance >= tile.value)
 	{
-		board.lcd.print("musisz zap³aciæ karê, blablabla");
-		// przy³o¿enie karty, zabranie kaski z konta
+		board.lcd.print("musisz zapï¿½aciï¿½ karï¿½, blablabla");
+		// przyï¿½oï¿½enie karty, zabranie kaski z konta
 		this->balance -= tile.value;
 	}
 	else
 	{
-		// policzyæ ewentualn¹ wartoœæ posiad³oœci po sprzedaniu (cena_pocz¹tkowa * 0.8?)
-		board.lcd.print("Ale siê ch³opie sp³uka³eœ, musisz coœ sprzedaæ");
+		// policzyï¿½ ewentualnï¿½ wartoï¿½ï¿½ posiadï¿½oï¿½ci po sprzedaniu (cena_poczï¿½tkowa * 0.8?)
+		board.lcd.print("Ale siï¿½ chï¿½opie spï¿½ukaï¿½eï¿½, musisz coï¿½ sprzedaï¿½");
 	}
 }
 

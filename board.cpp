@@ -1,5 +1,5 @@
-#include "board.h"
-#include <Player.h>
+#include "Board.h"
+#include "Player.h"
 #include <LiquidCrystal_I2C.h>
 #include <array>
 
@@ -18,17 +18,35 @@ LiquidCrystal_I2C Board::lcd_initializing()
 
 std::array<Player, 4> Board::players_initializing()
 {
-	// to trzeba jakoœ super rozkminic - zwracamy array czy 
+	// to trzeba jakoÅ“ super rozkminic - zwracamy array czy 
 	// ilosc graczy, a wypelniamy array gdzies indziej?
 
 	this->lcd.print("Dobra, to w ilu gramy?");
-	int odp = 4; // pobraæ z klawiaturki wartoœæ, ifcheck na wartosci
+	int odp = 4; // pobraÃ¦ z klawiaturki wartoÅ“Ã¦, ifcheck na wartosci
 	// Player p1 = Player(0);
 	std::array<Player, 4> tmp_nazwa = {  };
 	//Player tmp_nazwa[4];
 	for (int x = 1; x < odp; x++)
 	{
+
 		tmp_nazwa[x] = Player(x);
+
+		if (this->owner == 0)
+		{
+			
+			if (player.balance >= this->value)
+			{
+				lcd.print("Kupujesz za ?" + this->value);
+				// TODO ^this w jakiÅ“ sposÃ³b trzeba te importy ogarnÂ¹Ã¦
+				bool info_zwrotne = true;  // info zwrotne via klawiaturka, pÃ³ki co hardcode true
+				if (info_zwrotne == true)
+				{
+					this->owner = player.player_id;
+					
+
+				}
+			}
+		}
 	}
 	return tmp_nazwa;
 	
@@ -52,7 +70,7 @@ std::array<Tile, 36> Board::initialize_tiles()
 	//Tile pink_();
 	//
 	//Tile green_dworcowa()
-	//mo¿e ktoœ ma lepszy pomys³ albo przynajmniej lepsze zdjêcia planszy do monopoly
+	//moÂ¿e ktoÅ“ ma lepszy pomysÂ³ albo przynajmniej lepsze zdjÃªcia planszy do monopoly
 	// zwykle: https://ocdn.eu/images/pulscms/YmE7MDA_/ae26bab2aa7b6620d816db7a126f1a20.jpg
 	// kato https://ecsmedia.pl/c/16346400915680805-jpg-gallery.big-iext97058458.jpg
 
@@ -68,7 +86,7 @@ Tile Board::tile_from_id(char searched_id)
 	else
 	{
 		// if (searched_id != ) anuluj operacje?
-		//pobierz now¹ wartoœæ z klawiaturki
+		//pobierz nowÂ¹ wartoÅ“Ã¦ z klawiaturki
 	}
 }
 

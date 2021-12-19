@@ -116,9 +116,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__AVR_atmega32u4__;__AVR_ATmega32U4__;__AVR_ATmega32u4__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=108016;ARDUINO_AVR_YUN;ARDUINO_ARCH_AVR;USB_VID=0x2341;USB_PID=0x8041;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AVR_atmega328p__;__AVR_ATmega328P__;__AVR_ATmega328p__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=108013;ARDUINO_AVR_UNO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\expert-octo-potato;$(ProjectDir)..\..\..\..\Documents\Arduino\libraries\LiquidCrystal_I2C-1.1.2;D:\ArduinoIDE\Arduino\hardware\arduino\avr\libraries\Wire\src;D:\ArduinoIDE\Arduino\hardware\arduino\avr\libraries\Wire\src\utility;D:\ArduinoIDE\Arduino\hardware\arduino\avr\cores\arduino;D:\ArduinoIDE\Arduino\hardware\arduino\avr\variants\yun;D:\ArduinoIDE\Arduino\hardware\tools\avr\\lib\gcc\avr\7.3.0\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\avr\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\\lib\gcc\avr\7.3.0\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\avr\include-fixed;D:\ArduinoIDE\Arduino\hardware\tools\avr\avr\include\avr;D:\ArduinoIDE\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;D:\ArduinoIDE\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\expert-octo-potato;$(ProjectDir)..\..\..\OneDrive\Dokumenty\Arduino\libraries\LiquidCrystal_I2C;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src\utility;$(ProjectDir)..\..\..\OneDrive\Dokumenty\Arduino\libraries\arduino_38373\src;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\variants\standard;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\\lib\gcc\avr\7.3.0\include;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\\lib\gcc\avr\7.3.0\include;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include-fixed;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.expert-octo-potato.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -145,10 +145,12 @@
   <ItemGroup>
     <ClCompile Include="ArduinoMonopoly.ino" />
     <ClCompile Include="board.cpp" />
+    <ClCompile Include="InfraRed.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board.h" />
+    <ClInclude Include="InfraRed.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="__vm\.ArduinoMonopoly.vsarduino.h" />
     <ClInclude Include="__vm\.expert-octo-potato.vsarduino.h" />
