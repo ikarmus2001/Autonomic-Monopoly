@@ -160,7 +160,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties config.Debug.customdebug_uno_debugger_type="universal" />
+      <UserProperties config.Debug.customdebug_uno_debugger_type="universal" config.Debug.customdebug_yun_debugger_type="universal" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
