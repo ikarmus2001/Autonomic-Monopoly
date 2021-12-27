@@ -1,4 +1,5 @@
 // Player.h
+#include "board.h"
 
 #ifndef _PLAYER_h
 #define _PLAYER_h
@@ -6,7 +7,7 @@
 class Player
 {
 public:
-    char player_id;  // id related to player colour?
+    char player_id;  // id related to player color?
     char player_position;  // actually Tile::id
     int balance; // idk what else
     // list owned_properties?
@@ -19,13 +20,14 @@ public:
     }
 
     void turn(char roll, Board board);
-    void check_position();
+    void check_position(Board board, Tile tile);
     void further_operations(Board board);
     void exchange_properties(Player second_player, int charge = 0, char exchanged_tile_id = NULL);
     void pledge_property(char property_id);
     void retake_property(char property_id);
     void buy_property(Tile tile, Board board);
     void pay_penalty(Tile tile, Board board);
+    void pay_rent(Tile tile, Board board);
 };
 
 #if defined(ARDUINO) && ARDUINO >= 100

@@ -1,7 +1,7 @@
-#include "Board.h"
+#include "board.h"
 #include "Player.h"
-#include <LiquidCrystal_I2C.h>
-#include <array>
+#include "LiquidCrystal_I2C.h"
+#include "array" // ?
 
 
 LiquidCrystal_I2C Board::lcd_initializing()
@@ -18,7 +18,7 @@ LiquidCrystal_I2C Board::lcd_initializing()
 
 std::array<Player, 4> Board::players_initializing()
 {
-	// to trzeba jakoœ super rozkminic - zwracamy array czy 
+	// to trzeba jakos super rozkminic - zwracamy array czy 
 	// ilosc graczy, a wypelniamy array gdzies indziej?
 
 	this->lcd.print("Dobra, to w ilu gramy?");
@@ -30,23 +30,6 @@ std::array<Player, 4> Board::players_initializing()
 	{
 
 		tmp_nazwa[x] = Player(x);
-
-		if (this->owner == 0)
-		{
-			
-			if (player.balance >= this->value)
-			{
-				lcd.print("Kupujesz za ?" + this->value);
-				// TODO ^this w jakiœ sposób trzeba te importy ogarn¹æ
-				bool info_zwrotne = true;  // info zwrotne via klawiaturka, póki co hardcode true
-				if (info_zwrotne == true)
-				{
-					this->owner = player.player_id;
-					
-
-				}
-			}
-		}
 	}
 	return tmp_nazwa;
 	
@@ -54,6 +37,7 @@ std::array<Player, 4> Board::players_initializing()
 
 std::array<Tile, 36> Board::initialize_tiles()
 {
+	/*
 	return std::array<Tile, 36> = {
 	Tile start(0, 0, 100, 0),
 	Tile brown_dom_wedlikowskich(1, 1, 60, 1),
@@ -66,6 +50,9 @@ std::array<Tile, 36> Board::initialize_tiles()
 	Tile turquoise_osiedle_gwiazdy(8, 1, 100, 2);
 
 	Tile turquoise_(9, 1, 120, 2);
+	}
+	*/
+
 	//Tile prison();
 	//Tile pink_();
 	//
@@ -74,7 +61,7 @@ std::array<Tile, 36> Board::initialize_tiles()
 	// zwykle: https://ocdn.eu/images/pulscms/YmE7MDA_/ae26bab2aa7b6620d816db7a126f1a20.jpg
 	// kato https://ecsmedia.pl/c/16346400915680805-jpg-gallery.big-iext97058458.jpg
 
-	}
+
 }
 
 Tile Board::tile_from_id(char searched_id)
@@ -87,6 +74,18 @@ Tile Board::tile_from_id(char searched_id)
 	{
 		// if (searched_id != ) anuluj operacje?
 		//pobierz now¹ wartoœæ z klawiaturki
+	}
+}
+
+Player Board::player_from_id(char player_id)
+{
+	// TODO fix mess with players_list
+	for (int i = 0; i < this->players_list.max_size; i++)
+	{
+		if (this->players_list[i].player_id == player_id)
+		{
+			return this->players_list[i];
+		}
 	}
 }
 

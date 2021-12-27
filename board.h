@@ -3,9 +3,9 @@
 #ifndef _BOARD_h
 #define _BOARD_h
 
-#include <LiquidCrystal_I2C.h>
-#include <array>
-#include <Player.h>
+#include "LiquidCrystal_I2C.h"
+#include "array"
+#include "Player.h"
 
 class Tile
 {
@@ -41,16 +41,18 @@ public:
 	
 	std::array<Player, 4> players_initializing();
 	Tile tile_from_id(char searched_id);
+	Player player_from_id(char player_id);
 
 	std::array<Tile, 36> tiles_list = initialize_tiles();
 	LiquidCrystal_I2C lcd = lcd_initializing();
 	std::array<Player, 4> players_list;
 	//int players_count = players_initializing();
 	
-
+	int start_money;
 	
-	Board()
+	Board(int start_money=200)
 	{
+		this->start_money = start_money;
 		//to ma byæ puste?
 	}
 
