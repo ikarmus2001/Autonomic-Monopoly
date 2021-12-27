@@ -16,26 +16,38 @@ LiquidCrystal_I2C Board::lcd_initializing()
 	return lcd_tmp;
 }
 
-std::array<Player, 4> Board::players_initializing()
+std::vector<Player> Board::players_initializing()
 {
-	// to trzeba jakos super rozkminic - zwracamy array czy 
-	// ilosc graczy, a wypelniamy array gdzies indziej?
-
-	this->lcd.print("Dobra, to w ilu gramy?");
-	int odp = 4; // pobraæ z klawiaturki wartoœæ, ifcheck na wartosci
-	// Player p1 = Player(0);
-	std::array<Player, 4> tmp_nazwa = {  };
-	//Player tmp_nazwa[4];
-	for (int x = 1; x < odp; x++)
+	// TODO this->lcd.print("Dobra, to w ilu gramy?");
+	int odp = 4; // pobrac z klawiaturki
+	bool recycle = true;
+	std::vector<Player> players_list;
+	while (recycle)
 	{
-
-		tmp_nazwa[x] = Player(x);
+		switch (odp)
+		{
+		case 4:
+			Player p4 = Player(4);
+			players_list.push_back(p4);
+		case 3:
+			Player p3 = Player(3);
+			players_list.push_back(p3);
+		case 2:
+			Player p2 = Player(2);
+			players_list.push_back(p2);
+		case 1:
+			Player p1 = Player(1);
+			players_list.push_back(p1);
+			recycle = false;
+		default:
+			recycle = true;
+		}
 	}
-	return tmp_nazwa;
+	return players_list;
 	
 }
 
-std::array<Tile, 36> Board::initialize_tiles()
+std::vector<Tile> Board::initialize_tiles()
 {
 	/*
 	return std::array<Tile, 36> = {
@@ -57,7 +69,7 @@ std::array<Tile, 36> Board::initialize_tiles()
 	//Tile pink_();
 	//
 	//Tile green_dworcowa()
-	//mo¿e ktoœ ma lepszy pomys³ albo przynajmniej lepsze zdjêcia planszy do monopoly
+	//looking for better monopoly pics 
 	// zwykle: https://ocdn.eu/images/pulscms/YmE7MDA_/ae26bab2aa7b6620d816db7a126f1a20.jpg
 	// kato https://ecsmedia.pl/c/16346400915680805-jpg-gallery.big-iext97058458.jpg
 
@@ -70,17 +82,12 @@ Tile Board::tile_from_id(char searched_id)
 	{
 		return this->tiles_list[searched_id];
 	}
-	else
-	{
-		// if (searched_id != ) anuluj operacje?
-		//pobierz now¹ wartoœæ z klawiaturki
-	}
 }
 
 Player Board::player_from_id(char player_id)
 {
 	// TODO fix mess with players_list
-	for (int i = 0; i < this->players_list.max_size; i++)
+	for (int i = 0; i < this->players_list.size(); i++)
 	{
 		if (this->players_list[i].player_id == player_id)
 		{

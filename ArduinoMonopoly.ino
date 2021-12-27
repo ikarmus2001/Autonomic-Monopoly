@@ -9,8 +9,6 @@ InfraRed IR(2); // Tworzy obiekt czujnika podczerwieni podlaczonego do pinu 2
 
 void setup()
 {
-    //Board board;
-
     IR.begin(); // Rozpoczyna prace czujnika podczerwieni
 
 }
@@ -19,7 +17,7 @@ void loop()//player_list)
 {
 
     bool end_condition = false;
-    while (end_condition == false)  // tury lec¹ dopóki nie ma koñca gry
+    while (end_condition == false)  // turns till someone wins/game is terminated
     {
 
         //for (int x = 0; x < player_count; x++)
@@ -28,7 +26,6 @@ void loop()//player_list)
         //}
 
     }
-    // put your main code here, to run repeatedly:
 }
 
 // Przyk³adowa funkcja pokazuj¹ca jak pracowaæ z czujnikiem podczerwieni
@@ -56,14 +53,3 @@ void wyswietl()
     }
 
 }
-
-//int main()
-//{
-//    int players = player_count();
-//    setup();
-//    while (true)
-//    {
-//        loop();
-//    }
-//    return 0;
-//}

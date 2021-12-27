@@ -3,16 +3,21 @@
 
 void Player::turn(char roll, Board board)
 {
-	//if (this->in_prison == false)
-    this->player_position += roll; // add roll
-	if (this->player_position > 36)
+	if (this->in_prison < 1) // player is not in prison
 	{
-		this->player_position %= 36;  //mod board length
-		this->balance += board.start_money; // passed start, add money
+		this->player_position += roll; // move player by roll value
+		if (this->player_position > 36)
+		{
+			this->player_position %= 36;  //mod board length
+			this->balance += board.start_money; // passed start, add money
+		}
+		this->check_position(board, board.tile_from_id(this->player_position));
+		this->further_operations(board);
 	}
-    this->check_position(board, board.tile_from_id(this->player_position));
-    this->further_operations(board);
-	//else skip turn
+	else
+	{
+		this->in_prison -= 1; // decrement amount of turns left to leave prison
+	}
 }
 
 void Player::check_position(Board board, Tile tile)
@@ -53,63 +58,64 @@ void Player::check_position(Board board, Tile tile)
 		this->pay_penalty(tile, board);
 		break;
 	case 4:
-		// TODO random chance cards, probably with 
+		// TODO random chance cards, probably with moving to other places, giving money etc.
 	}
-	//if (tile.type == ) zamiast swithccase?
-
-	// if buyable 
-	//   if owner == bank - ask if want to buy
-	//   else this.pay_rent(tile, tile.owner)
-	// else if 
 }
 
 void Player::further_operations(Board board)
 {
-	board.lcd.print("Koniec ruchu, chcesz jeszcze:");
-    delay(1500);
-    board.lcd.print("<wpisz mnie>");
-    // TODO
-    // klawiaturka pobieranie odpowiedzi
+	// TODO klawiaturka pobieranie odpowiedzi
+	//board.lcd.print("Koniec ruchu, chcesz jeszcze:");
+    //delay(1500);
+    //board.lcd.print("<wpisz mnie>");
+	char decision = 1;
+	switch (decision)
+	{
+	case 1: // pledge properties
+		char tile_id = 0; // klawiaturka
+		this->pledge_property(board.tile_from_id(tile_id));
+	case 2: // buy property from other player
+		// somehow we need to check if second player even wants to trade xd
+		//TODO choose tile
+		//tile_id;
+		//charge;
+		//this->exchange_properties(second_player, charge, board.tile_from_id(tile_id));
+		break;
+	case 3: // use chance/social credit card
+		break;
+	case 4: // TODO upgrade property/buy houses
+		break;
+	default: // 
+		// board.lcd.print("jakies info");
+		break;
+	}
 }
 
 void Player::exchange_properties(Player second_player, int charge=0, char exchanged_tile_id=NULL)
 {
     
-    
 }
 
-void Player::pledge_property(char property_id)
+void Player::pledge_property(Tile tile)
 {
-    int property_value = 1; // somehow get value
-    this->balance += 0.6 * property_value;
+	tile.pledge = true;
+    this->balance += 0.6 * tile.value;
 }
 
-void Player::retake_property(char property_id)
+void Player::retake_property(Tile tile)
 {
 
 }
 
-// TODO
 void Player::buy_property(Tile tile, Board board)
 {
-	// chyba nie powinnismy sprawdzac czy pole jest buyable, o tym powinna zadecydowac wywolujaca funkcja
-	if (tile.type == 1 || tile.type == 2)  // is buyable
+	if (tile.owner == 0) // if current owner is bank
 	{
-		if (tile.owner == 0)
+		if (this->balance >= tile.value)
 		{
-
-			if (this->balance >= tile.value)
-			{
-				board.lcd.print("Kupujesz za " + tile.value);
-				bool info_zwrotne = true;  // info zwrotne via klawiaturka, poki co hardcode true
-				if (info_zwrotne == true)
-				{
-					tile.owner = this->player_id;
-					this->balance -= tile.value;
-				}
-			}
-
-
+			// TODO print kupujesz za tyle i tyle
+			this->balance -= tile.value;
+			tile.owner = this->player_id;
 		}
 	}
 }
@@ -146,4 +152,3 @@ void Player::pay_rent(Tile tile, Board board)
 	}
 	// else property is pledged, can't charge players, return
 }
-

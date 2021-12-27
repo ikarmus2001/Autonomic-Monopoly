@@ -10,21 +10,24 @@ public:
     char player_id;  // id related to player color?
     char player_position;  // actually Tile::id
     int balance; // idk what else
+    char in_prison;
     // list owned_properties?
 
-    Player(char id, char pos = 0, int starting_cash = 100)
+    Player(char id, char pos = 0, int starting_cash = 100, char in_prison=false)
     {
         this->player_id = id;
         this->player_position = pos;
         this->balance = starting_cash;
+        this->in_prison = in_prison;
     }
 
     void turn(char roll, Board board);
     void check_position(Board board, Tile tile);
     void further_operations(Board board);
+    void sell_property(Tile tile);
     void exchange_properties(Player second_player, int charge = 0, char exchanged_tile_id = NULL);
-    void pledge_property(char property_id);
-    void retake_property(char property_id);
+    void pledge_property(Tile tile);
+    void retake_property(Tile tile);
     void buy_property(Tile tile, Board board);
     void pay_penalty(Tile tile, Board board);
     void pay_rent(Tile tile, Board board);
