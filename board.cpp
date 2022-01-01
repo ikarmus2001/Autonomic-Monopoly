@@ -95,5 +95,3 @@ Player Board::player_from_id(char player_id)
 		}
 	}
 }
-
-

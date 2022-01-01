@@ -33,6 +33,11 @@ public:
 		this->pledge = pledge;
 		this->property_level = property_level;
 	}
+
+	Tile()
+	{
+		//default constructor
+	}
 };
 
 class Board

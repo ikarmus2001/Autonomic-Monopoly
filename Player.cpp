@@ -76,12 +76,16 @@ void Player::further_operations(Board board)
 		this->pledge_property(board.tile_from_id(tile_id));
 	case 2: // buy property from other player
 		// somehow we need to check if second player even wants to trade xd
-		//TODO choose tile
-		//tile_id;
-		//charge;
+		// player id, tile and charge should be taken from keyboard and returned as array
+		// then passed to exchange_properties method
+		//TODO keyboard answers
+		char second_player_id = 0;
+		char tile_id = 20; 
+		int charge = 0; //optional charge, check if is >= balance TODO
 		//this->exchange_properties(second_player, charge, board.tile_from_id(tile_id));
+		this->exchange_properties(board.player_from_id(second_player_id), board.tile_from_id(tile_id), charge);
 		break;
-	case 3: // use chance/social credit card
+	case 3: // TODO use chance/social credit card
 		break;
 	case 4: // TODO upgrade property/buy houses
 		break;
@@ -91,9 +95,24 @@ void Player::further_operations(Board board)
 	}
 }
 
-void Player::exchange_properties(Player second_player, int charge=0, char exchanged_tile_id=NULL)
+void Player::exchange_properties(Player second_player, Tile tile, int charge=0)
 {
-    
+	// assuming balance is >= charge
+	tile.owner = this->player_id;
+	Tile tmp;
+	for (int x = 0; x < this->owned_properties.size(); x++)
+	{
+		tmp = this->owned_properties[x];
+		if (&tile == &tmp)
+		{
+			this->owned_properties.erase(this->owned_properties.x); //dokonczyc asap
+		}
+	}
+	if (charge > 0)
+	{
+		this->balance -= charge;
+		second_player.balance += charge;
+	}
 }
 
 void Player::pledge_property(Tile tile)
@@ -104,20 +123,21 @@ void Player::pledge_property(Tile tile)
 
 void Player::retake_property(Tile tile)
 {
-
+	tile.pledge = false;
+	this->balance -= (0 * 6 * 1.2 * tile.value);
 }
 
 void Player::buy_property(Tile tile, Board board)
 {
-	if (tile.owner == 0) // if current owner is bank
+	// assuming property is owned by value
+	if (this->balance >= tile.value)
 	{
-		if (this->balance >= tile.value)
-		{
-			// TODO print kupujesz za tyle i tyle
-			this->balance -= tile.value;
-			tile.owner = this->player_id;
-		}
+		// TODO print kupujesz za tyle i tyle
+		this->balance -= tile.value;
+		tile.owner = this->player_id;
+		this->owned_properties.push_back(tile);
 	}
+	
 }
 
 void Player::pay_penalty(Tile tile, Board board)
@@ -130,8 +150,17 @@ void Player::pay_penalty(Tile tile, Board board)
 	}
 	else // not enough cash
 	{
-		// TODO selling/pledging properties to pay the rent
+		int debt = tile.value;
+		debt -= this->balance;
+		this->balance = 0;
+		this->sell_to_live(debt);
 	}
+}
+
+void Player::sell_to_live(int debt)
+{
+	// TODO selling/pledging properties to pay the rent
+
 }
 
 void Player::pay_rent(Tile tile, Board board)
@@ -142,7 +171,8 @@ void Player::pay_rent(Tile tile, Board board)
 		{
 			this->balance -= tile.value;
 
-			board.player_from_id(tile.owner).balance += tile.value; // ? add cash to owner's balance
+			Player player = board.player_from_id(tile.owner);
+			player.balance += tile.value; // ? add cash to owner's balance
 			// TODO print "you were charged {tile.value}, your balance is {this->balance}, thank you"
 		}
 		else // not enough money for paying the rent
