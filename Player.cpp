@@ -105,7 +105,7 @@ void Player::exchange_properties(Player second_player, Tile tile, int charge=0)
 		tmp = this->owned_properties[x];
 		if (&tile == &tmp)
 		{
-			this->owned_properties.erase(this->owned_properties.x); //dokonczyc asap
+			this->owned_properties.erase(this->owned_properties.x); // TODO dokonczyc asap, del certain element
 		}
 	}
 	if (charge > 0)
@@ -153,14 +153,91 @@ void Player::pay_penalty(Tile tile, Board board)
 		int debt = tile.value;
 		debt -= this->balance;
 		this->balance = 0;
-		this->sell_to_live(debt);
+		this->sell_to_live(debt, board);
 	}
 }
 
-void Player::sell_to_live(int debt)
+void Player::sell_to_live(int debt, Board board)
 {
-	// TODO selling/pledging properties to pay the rent
+	//TODO if someone wants to buy that person debt/exchange it for property or sth
+	// mixing up pledging and selling properties to other players
+	int possible_pledge_value = 0;
+	for (int i = 0; i < this->owned_properties.size(); i++)
+	{
+		possible_pledge_value += this->owned_properties[i].value * 0.6;  // pledge value
+	}
 
+	bool clean_or_dead = true;
+	while (clean_or_dead)
+	{
+		// ask if giving up?
+		bool give_up = false;
+		if (give_up)
+		{
+			// TODO del from board.players_list, all properties back to bank, del houses from owned tiles etc.
+		}
+
+		if (possible_pledge_value >= debt)
+		{
+			bool inputing_values = true;
+			bool odp = false;
+			int tmp_pledge_value = 0;
+			std::vector<Tile> tiles_to_pledge;
+			while (inputing_values)
+			{
+				// TODO ask which properties, end with inputing_values -> false
+				odp = true;
+				if (odp)
+				{
+					inputing_values = false;  // end up with pledging
+				}
+			}
+
+			// ask if done
+			bool done = false;
+			if (done)
+			{
+				break;
+			}
+		}
+		// sell properties to other player
+
+		// ask if any player wants to buy any of properties
+		bool anyone_buy = true;
+		if (anyone_buy)
+		{
+			int total_sell_value = 0;
+			while (total_sell_value < debt)
+			{
+				// ask for tile, player, price; ofc values hardcoded for greater reason
+				char scnd_player_id = 1;
+				Player second_player = board.player_from_id(scnd_player_id);
+				char tile_id = 12;
+				Tile tile = board.tile_from_id(tile_id);
+				int charge = 50;
+				this->exchange_properties(second_player, tile, charge);
+
+				// ask if done
+				bool done_2 = true;
+				if (done_2)
+				{
+					int tmp = debt;
+					debt -= total_sell_value;
+					total_sell_value = abs(total_sell_value - debt);
+					break;
+				}
+			}
+		}
+
+		if (debt <= 0)
+		{
+			this->balance += abs(debt);
+			clean_or_dead = false; // DELETE ME LATER just for safety
+			return;
+		}
+
+	}
+	
 }
 
 void Player::pay_rent(Tile tile, Board board)
@@ -177,7 +254,9 @@ void Player::pay_rent(Tile tile, Board board)
 		}
 		else // not enough money for paying the rent
 		{
-			// TODO selling/pledging properties to pay the rent
+			int debt = tile.value - this->balance;
+			this->balance = 0;
+			this->sell_to_live(debt, board);
 		}
 	}
 	// else property is pledged, can't charge players, return

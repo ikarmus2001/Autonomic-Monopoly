@@ -31,7 +31,7 @@ public:
     void buy_property(Tile tile, Board board);
     void pay_penalty(Tile tile, Board board);
     void pay_rent(Tile tile, Board board);
-    void sell_to_live(int debt);
+    void sell_to_live(int debt, Board board);
 };
 
 #if defined(ARDUINO) && ARDUINO >= 100
