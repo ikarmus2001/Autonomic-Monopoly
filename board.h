@@ -6,6 +6,7 @@
 #include "LiquidCrystal_I2C.h"
 #include <vector>
 #include "Player.h"
+#include "InfraRed.h"
 
 class Tile
 {
@@ -16,7 +17,6 @@ public:
 	// 4 - chance/social credit, 5 - prison, 6 - go to prison
 	// 7 - roll value-based property, 8 - parking/do-nothing
 	std::vector<int> value;  // buy price/penalty
-	// TODO make a value-level list
 	int owner;  // 0 - bank, <player id> - player
 	bool pledge;  // 1 if property is pledged, otherwise 0
 	int color;
@@ -50,18 +50,20 @@ public:
 	LiquidCrystal_I2C lcd_initializing();
 	LiquidCrystal_I2C lcd = lcd_initializing();
 
+	InfraRed ir_initializing(int pin);
+	InfraRed ir = ir_initializing(2);
+
 	std::vector<Tile> initialize_tiles(Board board);
 	std::vector<Tile> tiles_list = initialize_tiles(*this);
 
 	std::vector<Player> players_initializing();
 	std::vector<Player> players_list = players_initializing();
 
+
+
 	Tile tile_from_id(char searched_id);
 	Player player_from_id(char player_id);
 
-	// TODO klawiaturka
-	bool keyboard_response();
-	void write_text(String text);
 	int start_money;
 	
 	Board(int start_money=200)
