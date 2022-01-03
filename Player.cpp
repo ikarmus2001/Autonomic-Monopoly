@@ -183,18 +183,49 @@ void Player::sell_to_live(int debt, Board board)
 		*/
 		if (possible_pledge_value >= debt)
 		{
-			// work in progress, just wanted to push
+			// init
+			int tmp_pledge_value = 0;  // pledge value for so-far pledged tiles
+			std::vector<Tile> tiles_to_pledge;  // ?
 			bool inputing_values = true;
-			bool odp = false;
-			int tmp_pledge_value = 0;
-			std::vector<Tile> tiles_to_pledge;
 			while (inputing_values)
 			{
-				// TODO ask which properties, end with inputing_values -> false
-				odp = true;
-				if (odp)
+				// @Seba possible pledges may blink slowly (houses), huh?
+				bool x = true;
+				while (x)
 				{
-					inputing_values = false;  // end up with pledging
+					board.lcd.print("Zastawiasz dalej?"); // string polishing
+					char x = board.ir.decode();
+					switch (x)
+					{
+					case '+':
+						board.lcd.print("Podaj id pola"); // string polishing
+						int choice = board.ir.accumulate_num();
+						// check if choice in this->owned_properties
+						bool ch = false;
+						for (int i = 0; i < this->owned_properties.size(); i++)
+						{
+							if (this->owned_properties[i].id == choice)
+							{
+								ch = true;
+								break;
+							}
+						}
+						if (ch)
+						{
+							Tile tmp_tile = board.tile_from_id(choice);
+							// @Seba add some prints?
+						}
+						break;
+					case '-':
+						break;
+					default:
+						break;
+					}
+					bool odp;
+					if (odp)
+					{
+						inputing_values = false;  // end up with pledging
+					}
 				}
 			}
 
@@ -208,13 +239,13 @@ void Player::sell_to_live(int debt, Board board)
 		// sell properties to other player
 
 		// ask if any player wants to buy any of properties
-		bool anyone_buy = true;
+		bool anyone_buy = board.ir.decode();
 		if (anyone_buy)
 		{
 			int total_sell_value = 0;
 			while (total_sell_value < debt)
 			{
-				// ask for tile, player, price; ofc values hardcoded for greater reason
+				// TODO ask for tile, player, price; ofc values hardcoded for greater reason
 				char scnd_player_id = 1;
 				Player second_player = board.player_from_id(scnd_player_id);
 				char tile_id = 12;
@@ -222,7 +253,7 @@ void Player::sell_to_live(int debt, Board board)
 				int charge = 50;
 				this->exchange_properties(second_player, tile, charge);
 
-				// ask if done
+				// TODO ask if done
 				bool done_2 = true;
 				if (done_2)
 				{
