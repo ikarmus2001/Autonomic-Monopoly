@@ -32,13 +32,12 @@
 > opis projektu
 
 ### Wykorzystane technologie
-> Arduino UNO (klon z neta) <link?>
-> Moduł RFID 13.56MHz <biblioteka>
-> LCD z LiquidCrystal_I2C
-> Adresowalna tasma LED <link> <https://github.com/Aircoookie/WLED>
-
-  
-> jakie biblioteki wykorzystaliśmy, płytki, itd
+> Arduino UNO (klon z neta) <link?>\n
+ Moduł RFID 13.56MHz <biblioteka>\n
+ LCD z LiquidCrystal_I2C\n
+ InfraRed lib <https://github.com/Arduino-IRremote/Arduino-IRremote>\n
+ Adresowalna tasma LED <link> <https://github.com/Aircoookie/WLED> \n
+ jakie biblioteki wykorzystaliśmy, płytki, itd
 
 ## Opis działania
 > dokładny opis działania
