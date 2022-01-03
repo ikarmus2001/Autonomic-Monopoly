@@ -163,21 +163,27 @@ void Player::sell_to_live(int debt, Board board)
 	int possible_pledge_value = 0;
 	for (int i = 0; i < this->owned_properties.size(); i++)
 	{
-		possible_pledge_value += this->owned_properties[i].value * 0.6;  // pledge value
+		Tile tmp_tile = this->owned_properties[i];
+		if (tmp_tile.pledge == false)  // you can pledge property if it's not already pledged
+		{
+			possible_pledge_value += tmp_tile.value[tmp_tile.property_level] / 6;  // pledge value
+		}
 	}
 
 	bool clean_or_dead = true;
 	while (clean_or_dead)
 	{
+		/*
 		// ask if giving up?
 		bool give_up = false;
 		if (give_up)
 		{
 			// TODO del from board.players_list, all properties back to bank, del houses from owned tiles etc.
 		}
-
+		*/
 		if (possible_pledge_value >= debt)
 		{
+			// work in progress, just wanted to push
 			bool inputing_values = true;
 			bool odp = false;
 			int tmp_pledge_value = 0;
@@ -239,23 +245,28 @@ void Player::sell_to_live(int debt, Board board)
 	
 }
 
-void Player::pay_rent(Tile tile, Board board)
+void Player::pay_rent(Tile tile, Board board)  // CHECK, string polishing
 {
 	if (tile.pledge == false) // property not pledged
 	{
-		if (tile.value <= this->balance) // can pay the rent
+		if (tile.value[tile.property_level] <= this->balance) // can pay the rent
 		{
-			this->balance -= tile.value;
+			this->balance -= tile.value[tile.property_level]; // charge player
 
-			Player player = board.player_from_id(tile.owner);
-			player.balance += tile.value; // ? add cash to owner's balance
-			// TODO print "you were charged {tile.value}, your balance is {this->balance}, thank you"
+			Player player = board.player_from_id(tile.owner); // find tiles' owner
+			player.balance += tile.value[tile.property_level]; // add cash to owners' balance
+			// CHECK prints
+			board.lcd.print("Placisz ");
+			board.lcd.print(tile.value[tile.property_level]);
+			board.lcd.print(", nowy stan konta: ");
+			board.lcd.print(this->balance);
+			
 		}
 		else // not enough money for paying the rent
 		{
-			int debt = tile.value - this->balance;
-			this->balance = 0;
-			this->sell_to_live(debt, board);
+			int debt = tile.value[tile.property_level] - this->balance;  // debt - current balance (debt as little as possible)
+			this->balance = 0;  // take cash off
+			this->sell_to_live(debt, board);  // sell/pledge tiles to stay in game
 		}
 	}
 	// else property is pledged, can't charge players, return

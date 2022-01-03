@@ -1,34 +1,38 @@
 //#include <IRremote.hpp>
+#include <IRremote.hpp>
 #include "LiquidCrystal_I2C.h"
 #include "Wire.h"
 #include "Player.h"
 #include "board.h"
 #include "InfraRed.h"
 
-InfraRed IR(2); // Tworzy obiekt czujnika podczerwieni podlaczonego do pinu 2
+// Bookmarks:
+// TODO
+// string polishing
+// Done
+// CHECK
+// @Kacper
+// @Seba
 
 void setup()
 {
-    IR.begin(); // Rozpoczyna prace czujnika podczerwieni
-
+    Board board = Board(); // init board
 }
 
-void loop()//player_list)
+void loop()
 {
-
-    bool end_condition = false;
+    bool end_condition = false;  // TODO
     while (end_condition == false)  // turns till someone wins/game is terminated
     {
-
-        //for (int x = 0; x < player_count; x++)
-        //{
-            // Player.turn()
-        //}
 
     }
 }
 
+/*
 // Przyk³adowa funkcja pokazuj¹ca jak pracowaæ z czujnikiem podczerwieni
+
+InfraRed IR(2); // Tworzy obiekt czujnika podczerwieni podlaczonego do pinu 2
+
 void wyswietl() 
 {
     char znak;
@@ -53,3 +57,4 @@ void wyswietl()
     }
 
 }
+*/

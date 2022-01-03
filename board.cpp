@@ -1,59 +1,60 @@
 #include "board.h"
 
-LiquidCrystal_I2C Board::lcd_initializing()
+LiquidCrystal_I2C Board::lcd_initializing()  // DONE
 {
-	LiquidCrystal_I2C lcd_tmp = LiquidCrystal_I2C(0x27, 16, 2);
+	LiquidCrystal_I2C lcd_tmp = LiquidCrystal_I2C(0x27, 16, 2);  // standard lcd init
 	lcd_tmp.begin(16, 2);
 	lcd_tmp.backlight();
 	lcd_tmp.setCursor(0, 0);
 	lcd_tmp.print("Witaj!");
 	lcd_tmp.setCursor(0, 1);
-	lcd_tmp.print("Setup...");
+	lcd_tmp.print("Rozstawiamy pionki");
 	return lcd_tmp;
 }
 
-InfraRed Board::ir_initializing(int pin)
+InfraRed Board::ir_initializing(int pin) // CHECK
 {
 	InfraRed ir(pin);
 	ir.begin();
+	return ir;
 }
 
-std::vector<Player> Board::players_initializing()
+std::vector<Player> Board::players_initializing()  //string polishing
 {
-	this->lcd.print("Dobra, to w ilu gramy?"); // TODO poprawic string
-	char odp = this->ir.decode(); // pobrac z klawiaturki
-	bool recycle = true;
 	std::vector<Player> players_list;
-	Player p1 = Player(1);  // can't initialize vars in switch/skip initializing as it was earlier
+	Player p1 = Player(1);  // initialize players with their id
 	Player p2 = Player(2);  // https://stackoverflow.com/a/19830820/14345698
-	Player p3 = Player(3);
+	Player p3 = Player(3);  // can't initialize vars in switch/skip initializing as it was earlier
 	Player p4 = Player(4);
+	bool recycle = true;  // while loop ending condition
 	while (recycle)
 	{
+		this->lcd.print("Dobra, to w ilu gramy?"); // string polishing
+		char odp = this->ir.decode(); // load value from InfraRed
 		switch (odp)
-		{
-		case 4:
+		{  // push chosen amount of Player entities to vector 
+		case '4':
 			players_list.push_back(p4);
-		case 3:
+		case '3':
 			players_list.push_back(p3);
-		case 2:
+		case '2':
 			players_list.push_back(p2);
-		case 1:			
+		case '1':
 			players_list.push_back(p1);
-			recycle = false;
-			break;
+			recycle = false;  // break 'while' loop, that's proper amount of players
+			break;  // break switch, everything done
 		default:
-			recycle = true;
+			this->lcd.print("Podaj poprawn¹ iloœæ graczy");  // string polishing
+			recycle = true; // don't break 'while' loop, take value again
 		}
 	}
 	return players_list;
 	
 }
 
-std::vector<Tile> Board::initialize_tiles(Board board)
+std::vector<Tile> Board::initialize_tiles(Board board)  // TODO check
 {
-	// TODO oj kurde to trzeba ogarnac
-	// @Seba
+	// @Seba check Tile constructor types (names and values)
 	std::vector<Tile> lista;
 
 	std::vector<int> cokolwiek0;
@@ -299,22 +300,21 @@ std::vector<Tile> Board::initialize_tiles(Board board)
 	return lista;
 }
 
-Tile Board::tile_from_id(char searched_id)
+Tile Board::tile_from_id(char searched_id)  // Done
 {
-	if (searched_id >= 0 && searched_id <= 36)
+	if (searched_id >= 0 && searched_id <= 38)  // prevents IndexError
 	{
-		return this->tiles_list[searched_id];
+		return this->tiles_list[searched_id];  // well, no need to explain
 	}
 }
 
-Player Board::player_from_id(char player_id)
+Player Board::player_from_id(char player_id)  // Done
 {
-	// TODO fix mess with players_list
-	for (int i = 0; i < this->players_list.size(); i++)
+	for (int i = 0; i < this->players_list.size(); i++)  // iterate thru board.players_list
 	{
-		if (this->players_list[i].player_id == player_id)
+		if (this->players_list[i].player_id == player_id)  // if player_id from list == searched id
 		{
-			return this->players_list[i];
+			return this->players_list[i];  // return Player obj from list
 		}
 	}
 }

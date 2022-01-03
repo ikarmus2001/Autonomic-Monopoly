@@ -1,6 +1,7 @@
 #include "InfraRed.h"
 #include <IRremote.h>
 
+
 // Konstruktor ustawiajacy pin dla czujnika
 InfraRed::InfraRed(int IR_RECEIVE_PIN) {
     this->IR_RECEIVE_PIN = IR_RECEIVE_PIN;

@@ -30,7 +30,6 @@ class InfraRed
 private:
 	int IR_RECEIVE_PIN = 2;
 public:
-
 	InfraRed(int IR_RECEIVE_PIN);
 	void begin();		// Rozpoczyna prace z czujnikiem
 	void resume();		// Wznawia prace czujnika
