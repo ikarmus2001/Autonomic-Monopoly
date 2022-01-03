@@ -1,7 +1,4 @@
 #include "board.h"
-#include "Player.h"
-#include "LiquidCrystal_I2C.h"
-#include "array" // ?
 
 
 LiquidCrystal_I2C Board::lcd_initializing()
@@ -16,29 +13,44 @@ LiquidCrystal_I2C Board::lcd_initializing()
 	return lcd_tmp;
 }
 
+void Board::write_text(String text)
+{
+	// TODO strings
+	this->lcd.write(text);
+}
+
+bool Board::keyboard_response()
+{
+	bool decision;
+	//TODO
+	//this->
+	return decision;
+}
+
 std::vector<Player> Board::players_initializing()
 {
 	// TODO this->lcd.print("Dobra, to w ilu gramy?");
 	int odp = 4; // pobrac z klawiaturki
 	bool recycle = true;
 	std::vector<Player> players_list;
+	Player p1 = Player(1);  // can't initialize vars in switch/skip initializing as it was earlier
+	Player p2 = Player(2);  // https://stackoverflow.com/a/19830820/14345698
+	Player p3 = Player(3);
+	Player p4 = Player(4);
 	while (recycle)
 	{
 		switch (odp)
 		{
 		case 4:
-			Player p4 = Player(4);
 			players_list.push_back(p4);
 		case 3:
-			Player p3 = Player(3);
 			players_list.push_back(p3);
 		case 2:
-			Player p2 = Player(2);
 			players_list.push_back(p2);
-		case 1:
-			Player p1 = Player(1);
+		case 1:			
 			players_list.push_back(p1);
 			recycle = false;
+			break;
 		default:
 			recycle = true;
 		}
@@ -47,33 +59,15 @@ std::vector<Player> Board::players_initializing()
 	
 }
 
-std::vector<Tile> Board::initialize_tiles()
+std::vector<Tile> Board::initialize_tiles(Board board)
 {
-	/*
-	return std::array<Tile, 36> = {
-	Tile start(0, 0, 100, 0),
-	Tile brown_dom_wedlikowskich(1, 1, 60, 1),
-	Tile kasa_spoleczna_1(2, 4, 0, 0);
-	Tile brown_drapacz_chmur(3, 1, 60, 1);
-	Tile radio_eska(4, 3, 200, 0);
-	Tile park_kosciuszki(5, 2, 200, 10);
-	Tile turquoise_osiedle_tysiaclecia(6, 1, 100, 2);
-	Tile szansa_1(7, 4, 0, 0);
-	Tile turquoise_osiedle_gwiazdy(8, 1, 100, 2);
+	std::vector<Tile> lista;
+	std::vector<int> cokolwiek;
+	cokolwiek.push_back(board.start_money);
+	Tile var0 = Tile(0, F("Start"), 0, cokolwiek, 0);
+	lista.push_back(var0);
 
-	Tile turquoise_(9, 1, 120, 2);
-	}
-	*/
-
-	//Tile prison();
-	//Tile pink_();
-	//
-	//Tile green_dworcowa()
-	//looking for better monopoly pics 
-	// zwykle: https://ocdn.eu/images/pulscms/YmE7MDA_/ae26bab2aa7b6620d816db7a126f1a20.jpg
-	// kato https://ecsmedia.pl/c/16346400915680805-jpg-gallery.big-iext97058458.jpg
-
-
+	return lista;
 }
 
 Tile Board::tile_from_id(char searched_id)
