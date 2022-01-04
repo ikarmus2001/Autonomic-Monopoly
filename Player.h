@@ -16,15 +16,16 @@ public:
     void pledge_property(Tile tile);
     void retake_property(Tile tile);
     void buy_property(Tile tile, Board board);
+    void upgrade_property(Tile tile, Board board);
     void pay_penalty(Tile tile, Board board);
     void pay_rent(Tile tile, Board board);
     void sell_to_live(int debt, Board board, int second_player_id = 0);
     void give_up(Board board);
 
     // Attributes
-    char player_id;  // id related to player color?
+    char player_id;  // @Seba id related to player color?
     char player_position;  // actually Tile::id
-    char in_prison;
+    char in_prison;  // 0-3 turns in prison
     int balance; // idk what else
     std::vector<Tile> owned_properties;
 

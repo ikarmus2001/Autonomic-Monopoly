@@ -19,7 +19,7 @@ void Player::turn(char roll, Board board)
 	}
 }
 
-void Player::check_position(Board board, Tile tile)
+void Player::check_position(Board board, Tile tile)  // TODO case 7
 {
 	switch (tile.type) // 0 - start, 1 - usual property, 2 - airport, 3 - penalty, 4 - chance/social credit
 	{
@@ -31,23 +31,18 @@ void Player::check_position(Board board, Tile tile)
 		{
 			if (tile.owner == 0) // tile belongs to bank/is available to buy
 			{
-				//ask if you want to buy property TODO
-
-				/*
 				if (this->balance >= tile.buy_price)
 				{
-				board.lcd.print("Staæ Ciê, kupujesz?");  // string polishing
-				}
-				*/
-
-				bool decision = true; // hardcoded so far
-				if (decision = true)
-				{
-					this->buy_property(tile, board);
-				}
-				else
-				{
-					//licytacja TODO_later
+					board.lcd.print("Staæ Ciê, kupujesz?");  // string polishing
+					char decision = board.ir.decode();
+					if (decision == '+')
+					{
+						this->buy_property(tile, board);
+					}
+					else
+					{
+						//licytacja TODO_later
+					}
 				}
 			}
 			else // tile belongs to other player, pay rent
@@ -55,49 +50,53 @@ void Player::check_position(Board board, Tile tile)
 				this->pay_rent(tile, board);
 			}
 		}
-		//else  // property belongs to current player
-		//{
-			//well whatever, go to player.further_operations
-		//	break;
-		//}
+		//else -> property belongs to current player, it's ok
 		break;
 	case 3: //penalty
 		this->pay_penalty(tile, board);
 		break;
-	case 4:
-		// TODO random chance cards, probably with moving to other places, giving money etc.
+	case 4:  // TODO random chance cards, probably with moving to other places, giving money etc.
+	case 5:  // prison (as visitor, do nothing)
+	case 6:  // go to prison 
+		this->player_position = 10;  // TODO_later board.prison_location and board.prison_duration?
+		this->in_prison = 3;
+		break;
+	case 7:
+		
 	}
+
+	this->further_operations(board);
 }
 
-void Player::further_operations(Board board)
+void Player::further_operations(Board board)  // DONE, TODO_later
 {
-	// TODO klawiaturka pobieranie odpowiedzi
-	//board.lcd.print("Koniec ruchu, chcesz jeszcze:");
-    //delay(1500);
-    //board.lcd.print("<wpisz mnie>");
-	char decision = 1;
+	board.lcd.print("Koniec ruchu, chcesz jeszcze:");  // string polishing
+    board.lcd.print("<opcje>");  // string polishing
+	char decision = board.ir.decode();
+	Tile tmp;
 	switch (decision)
 	{
-	case 1: // pledge properties
+	case '1': // pledge properties
 		char tile_id = 0; // klawiaturka
 		this->pledge_property(board.tile_from_id(tile_id));
-	case 2: // buy property from other player
-		// somehow we need to check if second player even wants to trade xd
-		// player id, tile and charge should be taken from keyboard and returned as array
-		// then passed to exchange_property method
-		//TODO keyboard answers
-		char second_player_id = 0;
-		char tile_id = 20; 
-		int charge = 0; //optional charge, check if is >= balance TODO
-		//this->exchange_property(second_player, charge, board.tile_from_id(tile_id));
-		this->exchange_property(board.player_from_id(second_player_id), board.tile_from_id(tile_id), charge);
+	case '2': // buy property from other player
+		// assuming second player wants to trade
+		char tile_id = board.ir.accumulate_num(); 
+		tmp = board.tile_from_id(tile_id);
+		int charge = board.ir.accumulate_num(); //optional charge
+		this->exchange_property(board.player_from_id(tmp.owner), tmp , charge);
+		// TODO_later add some print/msg?
 		break;
-	case 3: // TODO use chance/social credit card
+	case '4': // upgrade property/buy houses
+		char tile_id = board.ir.accumulate_num();
+		tmp = board.tile_from_id(tile_id);
+		this->upgrade_property(tmp, board);
 		break;
-	case 4: // TODO upgrade property/buy houses
-		break;
+	case '3': // TODO use chance/social credit card @Seba idk if it even fits in Arduino mem XD
+		board.lcd.print("Work in progress, <do something>");  // string polishing
+	case '-':
 	default: // 
-		// board.lcd.print("jakies info");
+		board.lcd.print("dobra, to lecimy do nastêpnego gracza");  // string polishing
 		break;
 	}
 }
@@ -170,6 +169,25 @@ void Player::buy_property(Tile tile, Board board)  // DONE
 	this->owned_properties.push_back(tile);  // note that in owned_properties
 }
 
+void Player::upgrade_property(Tile tile, Board board)  // DONE CHECK
+{
+	int max_level = tile.value.size();
+	if (tile.property_level == max_level)
+	{
+		board.lcd.print("Ju¿ jest max");  // string polishing
+	}
+	else
+	{
+		board.lcd.print("Zap³acisz {tile.level_cost}");  // string polishing
+		char decision = board.ir.decode();
+		if (decision == '+' and this->balance >= tile.level_cost)
+		{
+			this->balance -= tile.level_cost;
+			tile.property_level += 1;
+		}
+	}
+}
+
 void Player::pay_penalty(Tile tile, Board board)  // DONE
 {
 	// assuming
@@ -215,6 +233,8 @@ void Player::pay_rent(Tile tile, Board board)  // CHECK, string polishing
 	}
 	// else property is pledged, can't charge players, return
 }
+
+void Player::
 
 void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 {
@@ -358,7 +378,8 @@ void Player::give_up(Board board)  // CHECK
 	this->balance = 0;
 	for (int i = 0; i < this->owned_properties.size(); i++)
 	{
-		Tile tmp = board.tile_from_id(this->owned_properties[i]);
+		int id = this->owned_properties[i];  // CHECK E0413 Tile -> int
+		Tile tmp = board.tile_from_id(id);
 		tmp.owner = 0; // return properties to bank
 	}
 

@@ -54,6 +54,7 @@ std::vector<Player> Board::players_initializing()  //string polishing
 
 std::vector<Tile> Board::initialize_tiles(Board board)  // TODO check
 {
+	// TODO inializing buy and pledge
 	// @Seba check Tile constructor types (names and values)
 	std::vector<Tile> lista;
 
