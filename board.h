@@ -21,6 +21,8 @@ public:
 	// 4 - chance/social credit, 5 - prison, 6 - go to prison
 	// 7 - roll value-based property, 8 - parking/do-nothing
 	std::vector<int> value;  // Tile value (over levels if possible)
+	int buy_price;  // price used when buying/pledgeing
+	int level_cost;  // how much leveling up/buying house costs
 	int color;
 	// 0 - no_color, 1 - brown, 2 - turquoise/light blue, 3 - pink, 4 - orange, 5 - red, 
 	// 6 - yellow, 7 - green, 8 - dark blue, 9 - newspaper(id12) and waterworks(id28),
@@ -31,12 +33,14 @@ public:
 	
 
 	Tile(int id, const __FlashStringHelper* name, int type, std::vector<int> value,
-		int color, int owner=0, bool pledge=false, int p_lvl=0)
+		int buy_price, int level_cost,  int color, int owner = 0, bool pledge = false, int p_lvl = 0)
 	{
 		this->id = id;
 		this->name = name;  // @Seba
 		this->type = type;
 		this->value = value;
+		this->buy_price = buy_price;
+		this->level_cost = level_cost;
 		this->color = color;
 		this->owner = owner; // default owner is bank
 		this->pledge = pledge; // default property is not pledged
