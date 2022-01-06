@@ -3,11 +3,6 @@
 #ifndef _BOARD_h
 #define _BOARD_h
 
-#include "LiquidCrystal_I2C.h"
-#include <vector>
-#include "Player.h"
-#include "InfraRed.h"
-
 class Tile
 {
 public:
@@ -58,7 +53,6 @@ class Board
 public:
 	// Init methods
 	LiquidCrystal_I2C lcd_initializing();
-	InfraRed ir_initializing(int pin);
 	std::vector<Tile> initialize_tiles(Board board);
 	std::vector<Player> players_initializing();
 
@@ -76,10 +70,6 @@ public:
 	
 	Board(int ir_pin=2, int start_money=200)
 	{
-		if (ir_pin != 2)
-		{
-			this->ir = ir_initializing(ir_pin);  // CHECK if pin != 2
-		}
 		this->tiles_list = initialize_tiles(*this); // CHECK idk if *this is correct
 		this->players_list = players_initializing();
 		
@@ -87,13 +77,6 @@ public:
 	}
 	
 };
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
 
 #endif
 

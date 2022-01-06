@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "board.h"
+#include <vector>
 
 void Player::turn(char roll, Board board)
 {
@@ -33,7 +35,7 @@ void Player::check_position(Board board, Tile tile)  // TODO case 7
 			{
 				if (this->balance >= tile.buy_price)
 				{
-					board.lcd.print("Staæ Ciê, kupujesz?");  // string polishing
+					board.lcd.print(F("Staæ Ciê, kupujesz?"));  // string polishing
 					char decision = board.ir.decode();
 					if (decision == '+')
 					{
@@ -70,8 +72,8 @@ void Player::check_position(Board board, Tile tile)  // TODO case 7
 
 void Player::further_operations(Board board)  // DONE, TODO_later
 {
-	board.lcd.print("Koniec ruchu, chcesz jeszcze:");  // string polishing
-    board.lcd.print("<opcje>");  // string polishing
+	board.lcd.print(F("Koniec ruchu, chcesz jeszcze:"));  // string polishing
+    board.lcd.print(F("<opcje>"));  // string polishing
 	char decision = board.ir.decode();
 	Tile tmp;
 	switch (decision)
@@ -93,10 +95,10 @@ void Player::further_operations(Board board)  // DONE, TODO_later
 		this->upgrade_property(tmp, board);
 		break;
 	case '3': // TODO use chance/social credit card @Seba idk if it even fits in Arduino mem XD
-		board.lcd.print("Work in progress, <do something>");  // string polishing
+		board.lcd.print(F("Work in progress, <do something>"));  // string polishing
 	case '-':
 	default: // 
-		board.lcd.print("dobra, to lecimy do nastêpnego gracza");  // string polishing
+		board.lcd.print(F("dobra, to lecimy do nastêpnego gracza"));  // string polishing
 		break;
 	}
 }
@@ -174,11 +176,11 @@ void Player::upgrade_property(Tile tile, Board board)  // DONE CHECK
 	int max_level = tile.value.size();
 	if (tile.property_level == max_level)
 	{
-		board.lcd.print("Ju¿ jest max");  // string polishing
+		board.lcd.print(F("Ju¿ jest max"));  // string polishing
 	}
 	else
 	{
-		board.lcd.print("Zap³acisz {tile.level_cost}");  // string polishing
+		board.lcd.print("Zap³acisz" + tile.level_cost);  // string polishing
 		char decision = board.ir.decode();
 		if (decision == '+' and this->balance >= tile.level_cost)
 		{
@@ -194,7 +196,7 @@ void Player::pay_penalty(Tile tile, Board board)  // DONE
 	// - player stands on penalty tile
 	if (this->balance >= tile.value[0])
 	{
-		board.lcd.print("musisz zaplacic kare, blablabla");  // string polishing
+		board.lcd.print(F("musisz zaplacic kare, blablabla"));  // string polishing
 		// @Seba RFID card, take cash off, forgot to place this comment in places when needed :<
 		this->balance -= tile.value[0];  // charge player
 	}
@@ -218,9 +220,9 @@ void Player::pay_rent(Tile tile, Board board)  // CHECK, string polishing
 			Player player = board.player_from_id(tile.owner); // find tiles' owner
 			player.balance += tile.value[tile.property_level]; // add cash to owners' balance
 			
-			board.lcd.print("Placisz ");  // string polishing
+			board.lcd.print(F("Placisz "));  // string polishing
 			board.lcd.print(tile.value[tile.property_level]);  // string polishing
-			board.lcd.print(", nowy stan konta: ");  // string polishing
+			board.lcd.print(F(", nowy stan konta: "));  // string polishing
 			board.lcd.print(this->balance);  // string polishing
 			
 		}
@@ -233,8 +235,6 @@ void Player::pay_rent(Tile tile, Board board)  // CHECK, string polishing
 	}
 	// else property is pledged, can't charge players, return
 }
-
-void Player::
 
 void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 {
@@ -270,7 +270,7 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 				while (x)
 				{
 					x = false;
-					board.lcd.print("Podaj id pola"); // string polishing
+					board.lcd.print(F("Podaj id pola")); // string polishing
 					int choice = board.ir.accumulate_num();
 					// check if choice in this->owned_properties
 					bool ch = false;
@@ -285,7 +285,7 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 					if (ch)
 					{
 						Tile tmp_tile = board.tile_from_id(choice);
-						// @Seba add some prints?
+						// @Seba add some prints?  // did you mean remove some free space from SRAM/flash? hehe
 
 						bool odp;
 						if (odp)
@@ -293,7 +293,7 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 							inputing_values = false;  // end up with pledging
 						}
 
-						board.lcd.print("Zastawiasz dalej?"); // string polishing
+						board.lcd.print(F("Zastawiasz dalej?")); // string polishing
 						char x = board.ir.decode();
 						if (x == '+')
 						{
@@ -305,7 +305,7 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 
 		}
 		// sell properties to other player
-		board.lcd.print("Ktoœ coœ kupi?"); // string polishing ask if any player wants to buy any of properties
+		board.lcd.print(F("Ktoœ coœ kupi?")); // string polishing ask if any player wants to buy any of properties
 		char anyone_buy = board.ir.decode();
 		if (anyone_buy == '+')
 		{
@@ -314,7 +314,7 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 			while (y)
 			{
 				y = false;
-				board.lcd.print("Podaj id pola");  // string polishing
+				board.lcd.print(F("Podaj id pola"));  // string polishing
 				char tile_id = board.ir.accumulate_num();
 				Tile tile = board.tile_from_id(tile_id);
 
@@ -323,7 +323,7 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 				if (second_player.player_id == second_player_id)
 				{
 					// @Seba give up debt?
-					board.lcd.print("Czy ta wymiana zeruje twój d³ug?"); // string polishing
+					board.lcd.print(F("Czy ta wymiana zeruje twój d³ug?")); // string polishing
 					char odp = board.ir.decode();
 					if (odp == '+')
 					{
@@ -333,13 +333,13 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 				}
 				else
 				{
-					board.lcd.print("Podaj wysokoœæ op³aty");  // string polishing
+					board.lcd.print(F("Podaj wysokoœæ op³aty"));  // string polishing
 					charge = board.ir.accumulate_num();
 				}
 
 				this->exchange_property(second_player, tile, charge);
 
-				board.lcd.print("Sprzedajesz/wymieniasz dalej?"); // string polishing
+				board.lcd.print(F("Sprzedajesz/wymieniasz dalej?")); // string polishing
 				char x = board.ir.decode();
 				if (x == '+')
 				{
@@ -361,12 +361,13 @@ void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
 			char give_up_decision = board.ir.decode();
 			if (give_up_decision == '+')
 			{
-				board.lcd.print("Jesteœ pewny?");  // string polishing
+				board.lcd.print(F("Jesteœ pewny?"));  // string polishing
 				give_up_decision = board.ir.decode();
 				if (give_up_decision == '+')
 				{
 					this->give_up(board);
 				}
+				// add "i'm not sure"
 			}
 			clean_or_dead = true;
 		}

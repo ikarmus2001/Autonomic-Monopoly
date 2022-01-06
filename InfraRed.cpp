@@ -1,11 +1,10 @@
 #include "InfraRed.h"
 #include <IRremote.h>
-#include <string>
 
 
 
-// Konstruktor ustawiajacy pin dla czujnika
-InfraRed::InfraRed(int IR_RECEIVE_PIN) {
+// Konstruktor ustawiajacy pin dla czujnika (domyœlnie pin 2)
+InfraRed::InfraRed(int IR_RECEIVE_PIN = 2) {
     this->IR_RECEIVE_PIN = IR_RECEIVE_PIN;
 }
 
@@ -107,16 +106,16 @@ char InfraRed::decode() // DONE
     return '?';
 }
 
-int InfraRed::accumulate_num()  // @Seba CHECK
+int InfraRed::accumulate_num()  // wywalamy z klasy, wrzucamy do board
 {
-    std::string result;
+    String result;
     bool warunek = true;
     while (warunek)
     {
         char tmp = this->decode();
         if (tmp == 'e')  // traktowany jako enter
         {
-            return stoi(result);
+            return result.toInt();
         }
         else
         {

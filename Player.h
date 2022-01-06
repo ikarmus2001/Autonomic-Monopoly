@@ -1,7 +1,4 @@
 // Player.h
-#include "board.h"
-#include <vector>
-
 #ifndef _PLAYER_h
 #define _PLAYER_h
 
@@ -37,13 +34,6 @@ public:
         this->in_prison = in_prison;
     }
 };
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
 
 #endif
 

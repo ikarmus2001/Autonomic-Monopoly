@@ -35,7 +35,7 @@ public:
 	void resume();		// Wznawia prace czujnika
 	bool available();	// Sprawdza, czy pojawil sie jakis sygnal
 	char decode();		// Dekoduje pobrany sygnal na akcje
-	int accumulate_num(); // 
+	int accumulate_num(); // do wywalenia
 };
 
 

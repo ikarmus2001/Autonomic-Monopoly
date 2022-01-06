@@ -1,25 +1,26 @@
 #include "board.h"
+#include "LiquidCrystal_I2C.h"
+#include <vector>
+#include "Player.h"
+#include "InfraRed.h"
 
 LiquidCrystal_I2C Board::lcd_initializing()  // DONE
 {
 	LiquidCrystal_I2C lcd_tmp = LiquidCrystal_I2C(0x27, 16, 2);  // standard lcd init
-	lcd_tmp.begin(16, 2);
+	lcd_tmp.init();
 	lcd_tmp.backlight();
 	lcd_tmp.setCursor(0, 0);
-	lcd_tmp.print("Witaj!");
+	lcd_tmp.print(F("Witaj!"));
+	delay(5000);
+	lcd_tmp.clear();
+	lcd_tmp.setCursor(0, 0);
+	lcd_tmp.print(F("Rozstawiamy")); // Limited by 16x2 display
 	lcd_tmp.setCursor(0, 1);
-	lcd_tmp.print("Rozstawiamy pionki");
+	lcd_tmp.print(F("pionki"));
 	return lcd_tmp;
 }
 
-InfraRed Board::ir_initializing(int pin) // CHECK
-{
-	InfraRed ir(pin);
-	ir.begin();
-	return ir;
-}
-
-std::vector<Player> Board::players_initializing()  //string polishing
+std::vector<Player> Board::players_initializing() 
 {
 	std::vector<Player> players_list;
 	Player p1 = Player(1);  // initialize players with their id
@@ -29,8 +30,17 @@ std::vector<Player> Board::players_initializing()  //string polishing
 	bool recycle = true;  // while loop ending condition
 	while (recycle)
 	{
-		this->lcd.print("Dobra, to w ilu gramy?"); // string polishing
-		char odp = this->ir.decode(); // load value from InfraRed
+		this->lcd.clear();
+		this->lcd.setCursor(0, 0);
+		this->lcd.print(F("Wybierz ilosc"));
+		this->lcd.setCursor(0, 1);
+		this->lcd.print(F("graczy: "));
+		char odp = '?';
+		if (this->ir.available()) {
+			odp = this->ir.decode(); // load value from InfraRed
+			this->lcd.print(odp);
+		}
+		
 		switch (odp)
 		{  // push chosen amount of Player entities to vector 
 		case '4':
@@ -43,8 +53,14 @@ std::vector<Player> Board::players_initializing()  //string polishing
 			players_list.push_back(p1);
 			recycle = false;  // break 'while' loop, that's proper amount of players
 			break;  // break switch, everything done
+		case '?':
+			break;	// break switch if there was no signal from remote
 		default:
-			this->lcd.print("Podaj poprawn¹ iloœæ graczy");  // string polishing
+			this->lcd.clear();
+			this->lcd.setCursor(0, 0);
+			this->lcd.print(F("Podaj poprawna"));
+			this->lcd.setCursor(0, 1);
+			this->lcd.print(F("ilosc graczy."));
 			recycle = true; // don't break 'while' loop, take value again
 		}
 	}
