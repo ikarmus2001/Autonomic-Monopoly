@@ -1,6 +1,8 @@
 #ifndef _INFRARED_h
 #define _INFRARED_h
 
+#include <IRremote.h>
+
 #define ir0		0xE916FF00
 #define ir1		0xF30CFF00
 #define ir2		0xE718FF00

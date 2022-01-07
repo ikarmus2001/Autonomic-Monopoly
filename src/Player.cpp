@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "board.h"
-#include <vector>
 
 void Player::turn(char roll, Board board)
 {
@@ -64,6 +62,8 @@ void Player::check_position(Board board, Tile tile)  // TODO case 7
 		this->in_prison = 3;
 		break;
 	case 7:
+        // coœ tu mia³o byæ chyba
+        break;
 		
 	}
 
@@ -99,7 +99,7 @@ void Player::further_operations(Board board)  // DONE, TODO_later | do poprawki
 		board.lcd.print(F("Work in progress, <do something>"));  // string polishing
         break;
 	case '-':
-        // todo
+        // fixme
         break;
 	default: // 
 		board.lcd.print(F("dobra, to lecimy do nastêpnego gracza"));  // string polishing
@@ -107,7 +107,7 @@ void Player::further_operations(Board board)  // DONE, TODO_later | do poprawki
 	}
 }
 
-void Player::exchange_property(Player second_player, Tile tile, int charge=0)  // DONE
+void Player::exchange_property(Player second_player, Tile tile, int charge)  // DONE
 {
 	// actually thats more exchange_OR_SELL_property
 	// note that property remains pledged (if was before)
@@ -127,7 +127,8 @@ void Player::exchange_property(Player second_player, Tile tile, int charge=0)  /
 		{   
 			// delete tile from 2nd_player.owned_properties
 			// https://www.cplusplus.com/reference/vector/vector/erase/#:~:text=myvector.erase%20(myvector.begin()%2B5)%3B
-			second_player.owned_properties.erase(second_player.owned_properties.begin() + x);
+            // hehe nie dzia³a na arduino sadge
+			second_player.owned_properties.erase(second_player.owned_properties.begin() + x); // FIXME @Kacper
 		}
 	}
 	if (charge > 0)  // this player pays second_player <charge>
@@ -240,7 +241,7 @@ void Player::pay_rent(Tile tile, Board board)  // CHECK, string polishing
 	// else property is pledged, can't charge players, return
 }
 
-void Player::sell_to_live(int debt, Board board, int second_player_id = 0)
+void Player::sell_to_live(int debt, Board board, int second_player_id)
 {
 	// assuming
 	// - balance = 0

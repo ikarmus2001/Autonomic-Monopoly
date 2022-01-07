@@ -3,8 +3,11 @@
 #ifndef _BOARD_h
 #define _BOARD_h
 
+#include <Arduino.h>
 #include "InfraRed.h"
 #include "LiquidCrystal_I2C.h"
+#include "Vector.h"
+#include "Player.h"
 
 class Tile
 {
@@ -18,7 +21,7 @@ public:
 	// 0 - start, 1 - usual property, 2 - airport, 3 - penalty, 
 	// 4 - chance/social credit, 5 - prison, 6 - go to prison
 	// 7 - roll value-based property, 8 - parking/do-nothing
-	std::vector<int> value;  // Tile value (over levels if possible)
+	Vector<int> value;  // Tile value (over levels if possible)
 	int buy_price;  // price used when buying/pledgeing
 	int level_cost;  // how much leveling up/buying house costs
 	int color;
@@ -30,7 +33,7 @@ public:
 	int property_level; // amount of houses, makes rent higher
 	
 
-	Tile(int id, const __FlashStringHelper* name, int type, std::vector<int> value,
+	Tile(int id, const __FlashStringHelper* name, int type, Vector<int> value,
 		int buy_price, int level_cost,  int color, int owner = 0, bool pledge = false, int p_lvl = 0)
 	{
 		this->id = id;
@@ -56,8 +59,8 @@ class Board
 public:
 	// Init methods
 	LiquidCrystal_I2C lcd_initializing();
-	std::vector<Tile> initialize_tiles(Board board);
-	std::vector<Player> players_initializing();
+	Vector<Tile> initialize_tiles(Board board);
+	Vector<Player> players_initializing();
 
 	// Methods
 	Tile tile_from_id(char searched_id);
@@ -66,8 +69,8 @@ public:
 	// Attributes
 	LiquidCrystal_I2C lcd = lcd_initializing();
 	InfraRed ir = InfraRed(2);
-	std::vector<Tile> tiles_list;
-	std::vector<Player> players_list;
+	Vector<Tile> tiles_list;
+	Vector<Player> players_list;
 
 	int start_money;
 	

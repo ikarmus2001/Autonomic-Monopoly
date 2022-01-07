@@ -26,7 +26,7 @@ public:
     char player_position;  // actually Tile::id
     char in_prison;  // 0-3 turns in prison
     int balance; // idk what else
-    std::vector<Tile> owned_properties;
+    Vector<Tile> owned_properties;
 
     Player(char id, char pos = 0, int starting_cash = 100, char in_prison=false)
     {

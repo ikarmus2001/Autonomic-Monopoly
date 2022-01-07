@@ -1,6 +1,4 @@
 #include "InfraRed.h"
-#include <IRremote.h>
-
 
 
 // Konstruktor ustawiajacy pin dla czujnika (domyœlnie pin 2)
