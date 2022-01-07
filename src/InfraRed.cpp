@@ -4,7 +4,7 @@
 
 
 // Konstruktor ustawiajacy pin dla czujnika (domyœlnie pin 2)
-InfraRed::InfraRed(int IR_RECEIVE_PIN = 2) {
+InfraRed::InfraRed(int IR_RECEIVE_PIN) {
     this->IR_RECEIVE_PIN = IR_RECEIVE_PIN;
 }
 

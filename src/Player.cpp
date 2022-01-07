@@ -70,33 +70,37 @@ void Player::check_position(Board board, Tile tile)  // TODO case 7
 	this->further_operations(board);
 }
 
-void Player::further_operations(Board board)  // DONE, TODO_later
+void Player::further_operations(Board board)  // DONE, TODO_later | do poprawki
 {
 	board.lcd.print(F("Koniec ruchu, chcesz jeszcze:"));  // string polishing
     board.lcd.print(F("<opcje>"));  // string polishing
 	char decision = board.ir.decode();
 	Tile tmp;
+    char tile_id;
 	switch (decision)
 	{
 	case '1': // pledge properties
-		char tile_id = 0; // klawiaturka
+		tile_id = 0; // klawiaturka
 		this->pledge_property(board.tile_from_id(tile_id));
 	case '2': // buy property from other player
 		// assuming second player wants to trade
-		char tile_id = board.ir.accumulate_num(); 
+		tile_id = board.ir.accumulate_num();
 		tmp = board.tile_from_id(tile_id);
 		int charge = board.ir.accumulate_num(); //optional charge
 		this->exchange_property(board.player_from_id(tmp.owner), tmp , charge);
 		// TODO_later add some print/msg?
 		break;
 	case '4': // upgrade property/buy houses
-		char tile_id = board.ir.accumulate_num();
+		tile_id = board.ir.accumulate_num();
 		tmp = board.tile_from_id(tile_id);
 		this->upgrade_property(tmp, board);
 		break;
 	case '3': // TODO use chance/social credit card @Seba idk if it even fits in Arduino mem XD
 		board.lcd.print(F("Work in progress, <do something>"));  // string polishing
+        break;
 	case '-':
+        // todo
+        break;
 	default: // 
 		board.lcd.print(F("dobra, to lecimy do nastêpnego gracza"));  // string polishing
 		break;

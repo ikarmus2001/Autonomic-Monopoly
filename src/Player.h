@@ -2,6 +2,8 @@
 #ifndef _PLAYER_h
 #define _PLAYER_h
 
+#include "board.h"
+
 class Player
 {
 public:

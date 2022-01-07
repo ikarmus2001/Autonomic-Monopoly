@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "board.h"
 #include "LiquidCrystal_I2C.h"
 #include <vector>

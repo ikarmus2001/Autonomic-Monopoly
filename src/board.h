@@ -3,6 +3,9 @@
 #ifndef _BOARD_h
 #define _BOARD_h
 
+#include "InfraRed.h"
+#include "LiquidCrystal_I2C.h"
+
 class Tile
 {
 public:
