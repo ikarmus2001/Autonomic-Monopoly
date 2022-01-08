@@ -77,6 +77,7 @@ void Player::further_operations(Board board)  // DONE, TODO_later | do poprawki
 	char decision = board.ir.decode();
 	Tile tmp;
     char tile_id;
+    int charge;
 	switch (decision)
 	{
 	case '1': // pledge properties
@@ -86,7 +87,7 @@ void Player::further_operations(Board board)  // DONE, TODO_later | do poprawki
 		// assuming second player wants to trade
 		tile_id = board.ir.accumulate_num();
 		tmp = board.tile_from_id(tile_id);
-		int charge = board.ir.accumulate_num(); //optional charge
+		charge = board.ir.accumulate_num(); //optional charge
 		this->exchange_property(board.player_from_id(tmp.owner), tmp , charge);
 		// TODO_later add some print/msg?
 		break;
@@ -216,7 +217,7 @@ void Player::pay_penalty(Tile tile, Board board)  // DONE
 
 void Player::pay_rent(Tile tile, Board board)  // CHECK, string polishing
 {
-	if (tile.pledge == false) // property not pledged
+	if (!tile.pledge) // property not pledged
 	{
 		if (tile.value[tile.property_level] <= this->balance) // can pay the rent
 		{
@@ -384,7 +385,7 @@ void Player::give_up(Board board)  // CHECK
 	this->balance = 0;
 	for (int i = 0; i < this->owned_properties.size(); i++)
 	{
-		int id = this->owned_properties[i];  // CHECK E0413 Tile -> int
+		int id = this->owned_properties[i];  // FIXME CHECK E0413 Tile -> int
 		Tile tmp = board.tile_from_id(id);
 		tmp.owner = 0; // return properties to bank
 	}
