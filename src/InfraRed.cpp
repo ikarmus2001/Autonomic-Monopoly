@@ -1,29 +1,33 @@
 #include "InfraRed.h"
-#include <IRremote.h>
 
-// Konstruktor ustawiajacy pin dla czujnika
+
+// Konstruktor ustawiajacy pin dla czujnika (domyœlnie pin 2)
 InfraRed::InfraRed(int IR_RECEIVE_PIN) {
     this->IR_RECEIVE_PIN = IR_RECEIVE_PIN;
 }
 
 
 // Rozpoczyna prace z czujnikiem
-void InfraRed::begin() {
+void InfraRed::begin()  // DONE
+{
     IrReceiver.begin(this->IR_RECEIVE_PIN, ENABLE_LED_FEEDBACK);
 }
 
 // Wznawia prace czujnika
-void InfraRed::resume() {
+void InfraRed::resume()  // DONE
+{
     IrReceiver.resume();
 }
 
 // Sprawdza, czy pojawil sie jakis sygnal
-bool InfraRed::available() {
+bool InfraRed::available()  // DONE
+{
     return IrReceiver.decode();
 }
 
 // Dekoduje sygnal i zwraca go w postaci chara
-char InfraRed::decode() {
+char InfraRed::decode() // DONE
+{
     // Pobiera HEX i dekoduje go na jego odpowiednik w charze
     switch (IrReceiver.decodedIRData.decodedRawData) {
     case ir0:
@@ -98,5 +102,23 @@ char InfraRed::decode() {
         // Opcjonalnie: dodac obsluge pozostalych przyciskow jesli zajdzie taka potrzeba
     }
     return '?';
+}
+
+int InfraRed::accumulate_num()  // wywalamy z klasy, wrzucamy do board
+{
+    String result;
+    bool warunek = true;
+    while (warunek)
+    {
+        char tmp = this->decode();
+        if (tmp == 'e')  // traktowany jako enter
+        {
+            return result.toInt();
+        }
+        else
+        {
+            result += tmp;
+        }
+    }
 }
 

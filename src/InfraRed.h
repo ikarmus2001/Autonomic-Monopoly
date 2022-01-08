@@ -1,6 +1,8 @@
 #ifndef _INFRARED_h
 #define _INFRARED_h
 
+#include <IRremote.h>
+
 #define ir0		0xE916FF00
 #define ir1		0xF30CFF00
 #define ir2		0xE718FF00
@@ -30,12 +32,12 @@ class InfraRed
 private:
 	int IR_RECEIVE_PIN = 2;
 public:
-
 	InfraRed(int IR_RECEIVE_PIN);
 	void begin();		// Rozpoczyna prace z czujnikiem
 	void resume();		// Wznawia prace czujnika
 	bool available();	// Sprawdza, czy pojawil sie jakis sygnal
 	char decode();		// Dekoduje pobrany sygnal na akcje
+	int accumulate_num(); // do wywalenia
 };
 
 
