@@ -156,7 +156,7 @@ Vector<Tile> Board::initialize_tiles(Board board)  // TODO check
 
 	Vector<int> cokolwiek14;
 	cokolwiek14.push_back((12, 60, 180, 500, 700, 900));
-	Tile var14(14, F("Stadion sl¹ski, Chorzow"), 1, cokolwiek14, 3, 0, 0, 0, 0, 0);
+	Tile var14(14, F("Stadion slaski, Chorzow"), 1, cokolwiek14, 3, 0, 0, 0, 0, 0);
 	lista.push_back(var14);
 
 
@@ -246,7 +246,7 @@ Vector<Tile> Board::initialize_tiles(Board board)  // TODO check
 
 	Vector<int> cokolwiek29;
 	cokolwiek29.push_back((24, 120, 360, 850, 1025, 1200));
-	Tile var29(29, F("Ul. Piotrkowska, £odz"), 1, cokolwiek29, 6, 0, 0, 0, 0, 0);
+	Tile var29(29, F("Ul. Piotrkowska, Lodz"), 1, cokolwiek29, 6, 0, 0, 0, 0, 0);
 	lista.push_back(var29);
 
 
@@ -321,7 +321,7 @@ Tile Board::tile_from_id(char searched_id)  // Done
 	}
 }
 
-Player Board::player_from_id(char player_id)  // Done
+Player Board::player_from_id(char player_id)  // Done | can be simplified to range-based loop
 {
 	for (int i = 0; i < this->players_list.size(); i++)  // iterate thru board.players_list
 	{
