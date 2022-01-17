@@ -37,7 +37,9 @@ public:
 	void resume();		// Wznawia prace czujnika
 	bool available();	// Sprawdza, czy pojawil sie jakis sygnal
 	char decode();		// Dekoduje pobrany sygnal na akcje
-	int accumulate_num(); // do wywalenia
+    void stop();
+    void start(int tickRate = 8000); // 8 ms stop of receiver, this enables a correct gap measurement
+	// int accumulate_num(); // do wywalenia
 };
 
 

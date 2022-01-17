@@ -23,14 +23,18 @@ Vector<Player> Board::players_initializing()
 	Player p2 = Player(2);  // https://stackoverflow.com/a/19830820/14345698
 	Player p3 = Player(3);  // can't initialize vars in switch/skip initializing as it was earlier
 	Player p4 = Player(4);
-	bool recycle = true;  // while loop ending condition
-	while (recycle)
+
+	bool validState = true;  // while loop ending condition
+    lcd.clear();
+    delay(100);
+
+    lcd.setCursor(0, 0);
+    lcd.print(F("Wybierz ilosc"));
+    lcd.setCursor(0, 1);
+    lcd.print(F("graczy: "));
+
+	while (validState)
 	{
-		this->lcd.clear();
-		this->lcd.setCursor(0, 0);
-		this->lcd.print(F("Wybierz ilosc"));
-		this->lcd.setCursor(0, 1);
-		this->lcd.print(F("graczy: "));
 		char odp = '?';
 		if (this->ir.available()) {
 			odp = this->ir.decode(); // load value from InfraRed
@@ -41,13 +45,25 @@ Vector<Player> Board::players_initializing()
 		{  // push chosen amount of Player entities to vector 
 		case '4':
 			players_list.push_back(p4);
+            players_list.push_back(p3);
+            players_list.push_back(p2);
+            players_list.push_back(p1);
+            validState = false;
+            break;
 		case '3':
-			players_list.push_back(p3);
+            players_list.push_back(p3);
+            players_list.push_back(p2);
+            players_list.push_back(p1);
+            validState = false;
+            break;
 		case '2':
-			players_list.push_back(p2);
+            players_list.push_back(p2);
+            players_list.push_back(p1);
+            validState = false;
+            break;
 		case '1':
 			players_list.push_back(p1);
-			recycle = false;  // break 'while' loop, that's proper amount of players
+            validState = false;  // break 'while' loop, that's proper amount of players
 			break;  // break switch, everything done
 		case '?':
 			break;	// break switch if there was no signal from remote
@@ -57,14 +73,23 @@ Vector<Player> Board::players_initializing()
 			this->lcd.print(F("Podaj poprawna"));
 			this->lcd.setCursor(0, 1);
 			this->lcd.print(F("ilosc graczy."));
-			recycle = true; // don't break 'while' loop, take value again
+            this->ir.resume();
+
+            delay(2000);
+            this->lcd.clear();
+            delay(100);
+
+            this->lcd.setCursor(0, 0);
+            this->lcd.print(F("Wybierz ilosc"));
+            this->lcd.setCursor(0, 1);
+            this->lcd.print(F("graczy: "));
+            break;
 		}
 	}
 	return players_list;
-	
 }
 
-Vector<Tile> Board::initialize_tiles(Board board)  // TODO check
+Vector<Tile> Board::initialize_tiles(const Board& board)  // TODO check
 {
 	// TODO inializing buy and pledge
 	// @Seba check Tile constructor types (names and values)

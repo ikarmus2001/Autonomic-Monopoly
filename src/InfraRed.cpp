@@ -25,6 +25,16 @@ bool InfraRed::available()  // DONE
     return IrReceiver.decode();
 }
 
+void InfraRed::start(int tickRate)
+{
+    IrReceiver.start(tickRate);
+}
+
+void InfraRed::stop()
+{
+    IrReceiver.stop();
+}
+
 // Dekoduje sygnal i zwraca go w postaci chara
 char InfraRed::decode() // DONE
 {
@@ -104,21 +114,21 @@ char InfraRed::decode() // DONE
     return '?';
 }
 
-int InfraRed::accumulate_num()  // wywalamy z klasy, wrzucamy do board
-{
-    String result;
-    bool warunek = true;
-    while (warunek)
-    {
-        char tmp = this->decode();
-        if (tmp == 'e')  // traktowany jako enter
-        {
-            return result.toInt();
-        }
-        else
-        {
-            result += tmp;
-        }
-    }
-}
+//int InfraRed::accumulate_num()  // wywalamy z klasy, wrzucamy do board
+//{
+//    String result;
+//    bool warunek = true;
+//    while (warunek)
+//    {
+//        char tmp = this->decode();
+//        if (tmp == 'e')  // traktowany jako enter
+//        {
+//            return result.toInt();
+//        }
+//        else
+//        {
+//            result += tmp;
+//        }
+//    }
+//}
 
