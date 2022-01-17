@@ -16,7 +16,7 @@ public:
 
 	// Attributes
 	int id; // Tile id
-	const static char *name[] PROGMEM; // CHECK @Seba
+	const static char name[] PROGMEM; // CHECK @Seba
 	int type;  // determines tile's behavior
 	// 0 - start, 1 - usual property, 2 - airport, 3 - penalty, 
 	// 4 - chance/social credit, 5 - prison, 6 - go to prison
@@ -67,7 +67,7 @@ public:
 	Player player_from_id(char player_id);
 
 	// Attributes
-	LiquidCrystal_I2C lcd;
+	LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2);
 	InfraRed ir = InfraRed(2);
 	Vector<Tile> tiles_list;
 	Vector<Player> players_list;
