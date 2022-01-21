@@ -59,7 +59,7 @@ class Board
 public:
 	// Init methods
 	LiquidCrystal_I2C lcd_initializing();
-	Vector<Tile> initialize_tiles(Board board);
+	Vector<Tile> initialize_tiles(const Board& board);
 	Vector<Player> players_initializing();
 
 	// Methods
@@ -67,7 +67,7 @@ public:
 	Player player_from_id(char player_id);
 
 	// Attributes
-	LiquidCrystal_I2C lcd = lcd_initializing();
+	LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2);
 	InfraRed ir = InfraRed(2);
 	Vector<Tile> tiles_list;
 	Vector<Player> players_list;
@@ -75,10 +75,8 @@ public:
 	int start_money;
 	
 	Board(int ir_pin=2, int start_money=200)
-	{
+    {
 		this->tiles_list = initialize_tiles(*this); // CHECK idk if *this is correct
-		this->players_list = players_initializing();
-		
 		this->start_money = start_money;
 	}
 	
