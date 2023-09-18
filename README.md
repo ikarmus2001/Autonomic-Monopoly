@@ -4,50 +4,33 @@
   <p>Projekt zautomatyzowanej gry planszowej w oparciu o płytkę Arduino</p>
 </div>
 
-<details>
-  <summary>Spis treści</summary>
-  <ol>
-    <li>
-      <a href="#o-projekcie">O projekcie</a>
-      <ul>
-        <li><a href="#wykorzystane-technologie">Wykorzystane technologie</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#opis-dzialania">Opis działania</a>
-    </li>
-    <li>
-     <a href="#instalacja">Instalacja</a>
-    </li>
-    <li>
-     <a href="#sposób-użycia">Sposób użycia</a>
-    </li>
-    <li>
-     <a href="#galeria">Galeria</a>
-    </li>
-  </ol>
-</details>
+# Spis treści
+1. [O projekcie](O-projekcie)
+    - [Wykorzystane technologie](Wykorzystane-technologie)
+2. [Instalacja](instalacja)
+3. [Sposób użycia](sposób-użycia)
 
 ## O projekcie
-> opis projektu
+Na przykładzie popularnej gry planszowej, projekt dotyka podstawowych zagadnień związanych z mikrokontrolerami:
+- Uruchamianie kodu w C++ na mikrokontrolerach
+- Obsługa GPIO
+- Integracja środowiska programistycznego
+
+Skonfigurowaliśmy automatyczną kompilację i wgrywanie projektu na mikrokontroler za pomocą CMake i PlatformIO
+Zaimportowaliśmy odpowiednie biblioteki ze sterownikami do peryferiów
+Utworzyliśmy abstrakcję kodu wykorzystując programowanie obiektowe w C++ (ze względu na brak czasu wyłącznie zarys pełnej logiki)
 
 ### Wykorzystane technologie
-> Arduino UNO (klon z neta) <link?>\n
- Moduł RFID 13.56MHz <biblioteka>\n
- LCD z LiquidCrystal_I2C\n
- InfraRed lib <https://github.com/Arduino-IRremote/Arduino-IRremote>\n
- Adresowalna tasma LED <link> <https://github.com/Aircoookie/WLED> \n
- jakie biblioteki wykorzystaliśmy, płytki, itd
-
-## Opis działania
-> dokładny opis działania
+- Arduino UNO (lub w naszym przypadku kompatybilny klon)
+- Moduł RFID 13.56MHz
+- LCD z LiquidCrystal_I2C
+- [InfraRed lib](https://github.com/Arduino-IRremote/Arduino-IRremote)
+- [Adresowalna tasma LED](https://github.com/Aircoookie/WLED)
 
 ## Instalacja
-> jak zainstalować, co potrzebne, prerequities itd
+
 
 ## Sposób użycia
-> miejsce na opis w jaki sposób skompilować i uruchomić projekt u siebie
+Kompilowaliśmy rozwiązanie za pomocą IDE CLion od Jetbrains, które znacząco uprościło tworzenie i debugwanie kodu, kompilację oraz instalację oprogramowania.
+Rozpoczęcie rozgrywki następuje od razu po uruchomieniu płytki.
 
-## Galeria
-
-> miejsce na zdjęcia
